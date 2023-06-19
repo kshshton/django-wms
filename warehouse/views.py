@@ -1,4 +1,7 @@
+from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
 from django.shortcuts import render
+from warehouse.models import Product
 
 
 def register(request):
@@ -34,3 +37,8 @@ def login_page(request):
 def logout_user(request):
     logout(request)
     return redirect('login')
+
+
+def all_products(request):
+    products = list(Product.objects.values())
+    return JsonResponse(products, safe=False)
