@@ -1,9 +1,9 @@
 <script lang="ts">
-    import Products from './lib/Products.svelte';
+    import Home from './lib/Home.svelte';
 </script>
 
 <main>
   <div class="card">
-    <Products />
+    <Home />
   </div>
 </main>

@@ -17,5 +17,9 @@
     "tslib": "^2.5.0",
     "typescript": "^5.0.2",
     "vite": "^4.3.9"
+  },
+  "dependencies": {
+    "gridjs-svelte": "^2.1.1",
+    "svelte-navigator": "^3.2.2"
   }
 }
