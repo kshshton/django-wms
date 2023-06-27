@@ -21,4 +21,6 @@ from warehouse import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('all_products/', views.all_products, name="all_products"),
+    path('register/', views.register, name="register"),
+    path('get_csrf_token/', views.get_csrf_token, name="get_csrf_token"),
 ]
