@@ -1,15 +1,27 @@
 import json
+
 from django.contrib.auth.decorators import login_required
-from django.http import JsonResponse, HttpResponse
-from django.shortcuts import render
+from django.contrib.auth.models import User
+from django.http import HttpResponse, JsonResponse
 from django.middleware.csrf import get_token
+from django.shortcuts import render
 from django.views.decorators.csrf import ensure_csrf_cookie
-from warehouse.models import Product
+
+from warehouse.models import Employee, Product
 
 
 def register(request):
     if request.method == 'POST':
-        data = json.loads(request.body)
+        data = json.loads(request.body)['data']
+        user = User.objects.create_user(
+            username=data.get('username'),
+            password=data.get('password'),
+        )
+        Employee.objects.create(
+            user=user,
+            name=data.get('username'),
+            email=data.get('email'),
+        )
         return JsonResponse(data)
 
 
