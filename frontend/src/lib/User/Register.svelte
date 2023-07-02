@@ -21,33 +21,41 @@
         <h1>
             Rejestracja
         </h1>
-        <label for="email">Email</label>
-        <input type="email" name="email" use:validators={[required, email]} bind:value={json.email} />
-        <HintGroup for="email">
-            <Hint on="required">{requiredMessage}</Hint>
-            <Hint on="email" hideWhenRequired>Niepoprawny mail</Hint>
-        </HintGroup>
+        <div class="field">
+            <label for="email">Email</label>
+            <input type="email" name="email" use:validators={[required, email]} bind:value={json.email} />
+            <HintGroup for="email">
+                <Hint on="required">{requiredMessage}</Hint>
+                <Hint on="email" hideWhenRequired>Niepoprawny mail</Hint>
+            </HintGroup>
+        </div>
 
-        <label for="name">Nazwa użytkownika</label>
-        <input type="text" name="name" bind:value={json.username} />
+        <div class="field">
+            <label for="name">Nazwa użytkownika</label>
+            <input type="text" name="name" bind:value={json.username} />
+        </div>
 
-        <label for="password">Hasło</label>
-        <input type="password" name="password" use:validators={[required, minLength(5), containNumbers(2)]}
-        bind:value={json.password} />
-        <HintGroup for="password">
-            <Hint on="required">{requiredMessage}</Hint>
-            <Hint on="minLength" hideWhenRequired let:value>To pole musi zawierać przynajmniej {value} znaków.</Hint>
-            <Hint on="containNumbers" hideWhen="minLength" let:value>
-                To pole musi zawierać przynajmniej {value} cyfr.
-            </Hint>
-        </HintGroup>
+        <div class="field">
+            <label for="password">Hasło</label>
+            <input type="password" name="password" use:validators={[required, minLength(5), containNumbers(2)]}
+            bind:value={json.password} />
+            <HintGroup for="password">
+                <Hint on="required">{requiredMessage}</Hint>
+                <Hint on="minLength" hideWhenRequired let:value>To pole musi zawierać przynajmniej {value} znaków.</Hint>
+                <Hint on="containNumbers" hideWhen="minLength" let:value>
+                    To pole musi zawierać przynajmniej {value} cyfr.
+                </Hint>
+            </HintGroup>
+        </div>
 
-        <label for="passwordConfirmation">Potwierdź hasło</label>
-        <input type="password" name="passwordConfirmation" use:validators={[required, passwordMatch]} />
-        <HintGroup for="passwordConfirmation">
-            <Hint on="required">{requiredMessage}</Hint>
-            <Hint on="passwordMatch" hideWhenRequired>Hasło nie pasuje do poprzedniego</Hint>
-        </HintGroup><br />
+        <div class="field">
+            <label for="passwordConfirmation">Potwierdź hasło</label>
+            <input type="password" name="passwordConfirmation" use:validators={[required, passwordMatch]} />
+            <HintGroup for="passwordConfirmation">
+                <Hint on="required">{requiredMessage}</Hint>
+                <Hint on="passwordMatch" hideWhenRequired>Hasło nie pasuje do poprzedniego</Hint>
+            </HintGroup><br />
+        </div>
 
         <button disabled={!$form.valid} on:click={() => sendForm(json, csrfToken)}>
             Wyślij
@@ -65,5 +73,11 @@
     main {
         display: flex;
         justify-content: space-around;
+    }
+
+    .field {
+        margin-top: 0.5em;
+        display: flex;
+        flex-direction: column;
     }
 </style>
