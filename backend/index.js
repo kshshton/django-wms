@@ -5,6 +5,7 @@ import cookieParser from 'cookie-parser';
 import {dirname, join} from 'path';
 import {fileURLToPath} from 'url';
 import usersRouter from './routes/users-routes.js';
+import authRouter from './routes/auth-routes.js';
 
 dotenv.config();
 
@@ -21,5 +22,6 @@ app.use(cookieParser());
 
 app.use('/', express.static(join(__dirname, 'public')));
 app.use('/api/users', usersRouter);
+app.use('/api/auth', authRouter);
 
 app.listen(PORT, () => console.log(`Server is running on: http://${URL}:${PORT}`));
