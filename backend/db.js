@@ -1,21 +1,20 @@
 import {PrismaClient} from '@prisma/client'
-import bcrypt from "bcrypt";
 
 const prisma = new PrismaClient()
 
 async function main() {
     // const password = "123test#";
-    // const properPassword = await bcrypt.hash(password, 10);
     // const user = await prisma.user.create({
     //     data: {
-    //         name: "User2",
-    //         password: properPassword,
-    //         email: "user2@gmail.com"
+    //         firstName: "Janusz",
+    //         lastName: "Tracz",
+    //         password: "test123",
+    //         email: "jtracz@gmail.com"
     //     }
     // });
 
-    const _delete  = await prisma.user.deleteMany();
-    console.log(_delete);
+    const deleteAllUsers = await prisma.user.deleteMany();
+    console.log(deleteAllUsers);
 }
 
 main()

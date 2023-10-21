@@ -1,7 +1,7 @@
 import express from 'express';
 import {PrismaClient} from '@prisma/client'
-import bcrypt from "bcrypt";
 import {authToken} from "../middlewares/auth.middlewares.js";
+import bcrypt from 'bcrypt';
 
 const prisma = new PrismaClient()
 const router = express.Router();
@@ -17,11 +17,12 @@ router.get('/all', authToken, async (req, res) => {
 
 router.post('/create', async (req, res) => {
     try {
-        const {name, password, email} = req.body;
+        const {firstName, lastName, password, email} = req.body;
         const hashedPassword = await bcrypt.hash(password, 10);
         const createUser = await prisma.user.create({
             data: {
-                name: name,
+                firstName: firstName,
+                lastName: lastName,
                 password: hashedPassword,
                 email: email
             }

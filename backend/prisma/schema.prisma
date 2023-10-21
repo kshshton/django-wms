@@ -26,13 +26,13 @@ model Sector {
 }
 
 model Product {
-  id       String  @id @default(uuid()) @map("id")
-  name     String?
+  id       String @id @default(uuid()) @map("id")
+  name     String
   category String
   quantity Int
-  order    Order   @relation(fields: [orderId], references: [id])
+  order    Order  @relation(fields: [orderId], references: [id])
   orderId  String
-  sector   Sector  @relation(fields: [sectorId], references: [id])
+  sector   Sector @relation(fields: [sectorId], references: [id])
   sectorId Int
 }
 

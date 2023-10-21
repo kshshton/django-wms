@@ -1,9 +1,8 @@
 import express from 'express';
 import {PrismaClient} from '@prisma/client'
-import bcrypt from "bcrypt";
+import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import {jwtTokens} from "../utils/jwt-helpers-utils.js";
-// import {jwtTokens} from '../utils/jwt-helpers-utils.js';
+import {jwtTokens} from '../utils/jwt-helpers-utils.js';
 
 const prisma = new PrismaClient()
 const router = express.Router();
@@ -12,7 +11,7 @@ router.post('/login', async (req, res) => {
     try {
         const {email, password} = req.body;
 
-        const user = await prisma.user.findFirstOrThrow({where: {email: email}});
+        const user = await prisma.user.findUniqueOrThrow({where: {email: email}});
 
         const isPasswordValid = await bcrypt.compare(password, user.password);
         if (!isPasswordValid) throw new Error('Invalid password!');
