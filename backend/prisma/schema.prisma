@@ -11,37 +11,36 @@ datasource db {
 }
 
 model User {
-  id      String  @id @map("id") @default(uuid())
-  name    String? @unique
-  password String?
-  email   String? @unique
+  id        String  @id @default(uuid()) @map("id")
+  firstName String
+  lastName  String
+  password  String
+  email     String  @unique
+  orders    Order[]
 }
 
 model Sector {
-  id       String  @id @map("id") @default(uuid())
-  capacity Int
-  name     String? @unique
+  id       Int       @id @default(autoincrement())
+  name     String    @unique
+  products Product[]
 }
 
 model Product {
-  id       String  @id @map("id") @default(uuid())
+  id       String  @id @default(uuid()) @map("id")
   name     String?
   category String
   quantity Int
-  order    Order @relation(fields: [orderId], references: [id])
+  order    Order   @relation(fields: [orderId], references: [id])
   orderId  String
+  sector   Sector  @relation(fields: [sectorId], references: [id])
+  sectorId Int
 }
 
 model Order {
-  id           String    @id @map("id") @default(uuid())
-  name         String?
-  complete     Boolean?
-  cart         Product[]
-  scanner      Scanner @relation(fields: [scannerId], references: [id])
-  scannerId    String
-}
-
-model Scanner {
-  id     String  @id @map("id") @default(uuid())
-  orders Order[]
+  id       String    @id @default(uuid()) @map("id")
+  name     String
+  complete Boolean
+  cart     Product[]
+  user     User      @relation(fields: [userId], references: [id])
+  userId   String
 }

@@ -4,18 +4,18 @@ import bcrypt from "bcrypt";
 const prisma = new PrismaClient()
 
 async function main() {
-    const password = "123test#";
-    const properPassword = await bcrypt.hash(password, 10);
-    const user = await prisma.user.create({
-        data: {
-            name: "User2",
-            password: properPassword,
-            email: "user2@gmail.com"
-        }
-    });
+    // const password = "123test#";
+    // const properPassword = await bcrypt.hash(password, 10);
+    // const user = await prisma.user.create({
+    //     data: {
+    //         name: "User2",
+    //         password: properPassword,
+    //         email: "user2@gmail.com"
+    //     }
+    // });
 
-    // const _delete  = await prisma.user.delete({where: {email: ""}});
-    console.log(user);
+    const _delete  = await prisma.user.deleteMany();
+    console.log(_delete);
 }
 
 main()
