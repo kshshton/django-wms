@@ -20,27 +20,50 @@ model User {
 }
 
 model Sector {
-  id       Int       @id @default(autoincrement())
+  id       Int       @unique
   name     String    @unique
   products Product[]
 }
 
 model Product {
-  id       String @id @default(uuid()) @map("id")
+  id       String  @id @default(uuid()) @map("id")
   name     String
   category String
   quantity Int
-  order    Order  @relation(fields: [orderId], references: [id])
-  orderId  String
-  sector   Sector @relation(fields: [sectorId], references: [id])
-  sectorId Int
+  order    Order?  @relation(fields: [orderId], references: [id])
+  orderId  String?
+  sector   Sector? @relation(fields: [sectorId], references: [id])
+  sectorId Int?
 }
 
 model Order {
-  id       String    @id @default(uuid()) @map("id")
-  name     String
-  complete Boolean
-  cart     Product[]
-  user     User      @relation(fields: [userId], references: [id])
-  userId   String
+  id         String    @id @default(uuid()) @map("id")
+  customer   Customer  @relation(fields: [customerId], references: [id])
+  customerId String
+  address    Address   @relation(fields: [addressId], references: [id])
+  addressId  String
+  complete   Boolean
+  cart       Product[]
+  user       User?     @relation(fields: [userId], references: [id])
+  userId     String?
+}
+
+model Customer {
+  id        String  @id @default(uuid()) @map("id")
+  firstName String
+  lastName  String
+  email     String  @unique
+  phone     String?
+  orders    Order[]
+}
+
+model Address {
+  id              String  @id @default(uuid()) @map("id")
+  city            String
+  state           String
+  country         String
+  streetName      String
+  buildingNumber  Int
+  apartmentNumber String
+  order           Order[]
 }

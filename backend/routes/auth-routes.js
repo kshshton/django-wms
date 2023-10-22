@@ -2,7 +2,7 @@ import express from 'express';
 import {PrismaClient} from '@prisma/client'
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import {jwtTokens} from '../utils/jwt-helpers-utils.js';
+import {jwtTokens} from '../utils/jwt-utils.js';
 
 const prisma = new PrismaClient()
 const router = express.Router();
@@ -15,8 +15,6 @@ router.post('/login', async (req, res) => {
 
         const isPasswordValid = await bcrypt.compare(password, user.password);
         if (!isPasswordValid) throw new Error('Invalid password!');
-
-        // return res.status(200).json({message: "Success!"});
 
         let tokens = jwtTokens(user);
         res.cookie('refresh_token', tokens.refreshToken, {httpOnly: true});

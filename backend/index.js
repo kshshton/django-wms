@@ -2,20 +2,21 @@ import express, {json} from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
-import {dirname, join} from 'path';
-import {fileURLToPath} from 'url';
-import usersRouter from './routes/users-routes.js';
+import userRouter from './routes/user-routes.js';
 import authRouter from './routes/auth-routes.js';
+import productsRouter from './routes/products-routes.js';
+import sectorsRouter from './routes/sectors-routes.js';
+import ordersRouter from './routes/orders-routes.js';
+import customerRouter from './routes/customer-routes.js';
+import addressRouter from './routes/address-routes.js';
 
 dotenv.config();
-
-const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 const URL = process.env.URL || '127.0.0.1';
 const corsOptions = {
-    origin: 'http://localhost:5173',
+    origin: ['http://localhost:8000', 'http://localhost:5173'],
     methods: ['GET', 'POST', 'PUT', 'DELETE']
 }
 
@@ -23,8 +24,12 @@ app.use(cors(corsOptions));
 app.use(json());
 app.use(cookieParser());
 
-app.use('/', express.static(join(__dirname, 'public')));
-app.use('/api/users', usersRouter);
+app.use('/api/user', userRouter);
 app.use('/api/auth', authRouter);
+app.use('/api/products', productsRouter);
+app.use('/api/sectors', sectorsRouter);
+app.use('/api/orders', ordersRouter);
+app.use('/api/customer', customerRouter);
+app.use('/api/address', addressRouter);
 
 app.listen(PORT, () => console.log(`Server is running on: http://${URL}:${PORT}`));

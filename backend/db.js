@@ -13,8 +13,8 @@ async function main() {
     //     }
     // });
 
-    const deleteAllUsers = await prisma.user.deleteMany();
-    console.log(deleteAllUsers);
+    const _delete = await prisma.address.deleteMany();
+    console.log(_delete);
 }
 
 main()
