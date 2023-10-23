@@ -10,7 +10,9 @@ router.get('/', authToken, async (req, res) => {
         const getSectors = await prisma.sector.findMany();
         res.json(getSectors);
     } catch (_err) {
-        res.status(500).json({error: _err.message});
+        res.status(500).json({
+            error: _err.message
+        });
     }
 })
 
@@ -18,10 +20,16 @@ router.get('/', authToken, async (req, res) => {
 router.get('/:id', authToken, async (req, res) => {
     try {
         const id = parseInt(req.params.id);
-        const getSector = await prisma.sector.findMany({where: {id: id}});
+        const getSector = await prisma.sector.findMany({
+            where: {
+                id: id
+            }
+        });
         res.json(getSector);
     } catch (_err) {
-        res.status(500).json({error: _err.message});
+        res.status(500).json({
+            error: _err.message
+        });
     }
 })
 
@@ -29,10 +37,16 @@ router.get('/:id', authToken, async (req, res) => {
 router.delete('/:id', authToken, async (req, res) => {
     try {
         const id = parseInt(req.params.id);
-        const deleteSector = await prisma.sector.delete({where: {id: id}});
+        const deleteSector = await prisma.sector.delete({
+            where: {
+                id: id
+            }
+        });
         res.json(deleteSector);
     } catch (_err) {
-        res.status(500).json({error: _err.message});
+        res.status(500).json({
+            error: _err.message
+        });
     }
 })
 
@@ -42,12 +56,18 @@ router.put('/:id', authToken, async (req, res) => {
         const id = parseInt(req.params.id);
         const {name} = req.body;
         const updateSector = await prisma.sector.update({
-            where: {id: id},
-            data: {name: name}
+            where: {
+                id: id
+            },
+            data: {
+                name: name
+            }
         });
         res.json(updateSector);
     } catch (_err) {
-        res.status(500).json({error: _err.message});
+        res.status(500).json({
+            error: _err.message
+        });
     }
 })
 
@@ -63,7 +83,9 @@ router.post('/', authToken, async (req, res) => {
         });
         res.json(addSector);
     } catch (_err) {
-        res.status(500).json({error: _err.message});
+        res.status(500).json({
+            error: _err.message
+        });
     }
 })
 

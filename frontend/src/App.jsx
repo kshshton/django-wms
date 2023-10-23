@@ -4,11 +4,11 @@ import {
     Route
 } from "react-router-dom";
 import './App.css'
-import AppBar from "./components/semantic/AppBar.jsx";
-import Home from "./components/Home.jsx";
-import Products from "./components/Products.jsx";
-import Sectors from "./components/Sectors.jsx";
-import Orders from "./components/Orders.jsx";
+import AppBar from "./components/AppBar.jsx";
+import Home from "./components/pages/Home.jsx";
+import Products from "./components/pages/Products.jsx";
+import Sectors from "./components/pages/Sectors.jsx";
+import Orders from "./components/pages/Orders.jsx";
 import User from "./components/user/User.jsx";
 import Login from "./components/user/Login.jsx";
 import Register from "./components/user/Register.jsx";

@@ -1,7 +1,6 @@
 import express from 'express';
 import {PrismaClient} from '@prisma/client'
 import {authToken} from "../middlewares/auth.middlewares.js";
-import {del} from "express/lib/application.js";
 
 const prisma = new PrismaClient()
 const router = express.Router();
@@ -10,10 +9,16 @@ const router = express.Router();
 router.get('/:id', authToken, async (req, res) => {
     try {
         const id = req.params.id;
-        const getAddress = await prisma.address.findMany({where: {id: id}});
+        const getAddress = await prisma.address.findMany({
+            where: {
+                id: id
+            }
+        });
         res.json(getAddress);
     } catch (_err) {
-        res.status(500).json({error: _err.message});
+        res.status(500).json({
+            error: _err.message
+        });
     }
 })
 
@@ -21,10 +26,16 @@ router.get('/:id', authToken, async (req, res) => {
 router.delete('/:id', authToken, async (req, res) => {
     try {
         const id = req.params.id;
-        const deleteAddress = await prisma.address.delete({where: {id: id}});
+        const deleteAddress = await prisma.address.delete({
+            where: {
+                id: id
+            }
+        });
         res.json(deleteAddress);
     } catch (_err) {
-        res.status(500).json({error: _err.message});
+        res.status(500).json({
+            error: _err.message
+        });
     }
 })
 
@@ -46,7 +57,9 @@ router.put('/:id', authToken, async (req, res) => {
         });
         res.json(updateAddress);
     } catch (_err) {
-        res.status(500).json({error: _err.message});
+        res.status(500).json({
+            error: _err.message
+        });
     }
 })
 
@@ -66,7 +79,9 @@ router.post('/', authToken, async (req, res) => {
         });
         res.json(addAddress);
     } catch (_err) {
-        res.status(500).json({error: _err.message});
+        res.status(500).json({
+            error: _err.message
+        });
     }
 })
 

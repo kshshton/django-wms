@@ -12,7 +12,9 @@ router.get('/', authToken, async (req, res) => {
         const getUsers = await prisma.user.findMany();
         res.json(getUsers);
     } catch (_err) {
-        res.status(500).json({error: _err.message});
+        res.status(500).json({
+            error: _err.message
+        });
     }
 })
 
@@ -20,10 +22,16 @@ router.get('/', authToken, async (req, res) => {
 router.get('/:id', authToken, async (req, res) => {
     try {
         const id = req.params.id;
-        const getUser = await prisma.user.findMany({where: {id: id}});
+        const getUser = await prisma.user.findMany({
+            where: {
+                id: id
+            }
+        });
         res.json(getUser);
     } catch (_err) {
-        res.status(500).json({error: _err.message});
+        res.status(500).json({
+            error: _err.message
+        });
     }
 })
 
@@ -31,10 +39,16 @@ router.get('/:id', authToken, async (req, res) => {
 router.delete('/:id', authToken, async (req, res) => {
     try {
         const id = req.params.id;
-        const deleteUser = await prisma.user.delete({where: {id: id}});
+        const deleteUser = await prisma.user.delete({
+            where: {
+                id: id
+            }
+        });
         res.json(deleteUser);
     } catch (_err) {
-        res.status(500).json({error: _err.message});
+        res.status(500).json({
+            error: _err.message
+        });
     }
 })
 
@@ -44,8 +58,10 @@ router.put('/:id', async (req, res) => {
         const id = req.params.id;
         const {firstName, lastName, password, email} = req.body;
         const hashedPassword = await bcrypt.hash(password, 10);
-        const createUser = await prisma.user.update({
-            where: {id: id},
+        const updateUser = await prisma.user.update({
+            where: {
+                id: id
+            },
             data: {
                 firstName: firstName,
                 lastName: lastName,
@@ -53,9 +69,11 @@ router.put('/:id', async (req, res) => {
                 email: email
             }
         });
-        res.json(createUser);
+        res.json(updateUser);
     } catch (_err) {
-        res.status(500).json({error: _err.message});
+        res.status(500).json({
+            error: _err.message
+        });
     }
 })
 
@@ -74,7 +92,9 @@ router.post('/', async (req, res) => {
         });
         res.json(createUser);
     } catch (_err) {
-        res.status(500).json({error: _err.message});
+        res.status(500).json({
+            error: _err.message
+        });
     }
 })
 

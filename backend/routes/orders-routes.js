@@ -10,7 +10,9 @@ router.get('/', authToken, async (req, res) => {
         const getOrders = await prisma.order.findMany();
         res.json(getOrders);
     } catch (_err) {
-        res.status(500).json({error: _err.message});
+        res.status(500).json({
+            error: _err.message
+        });
     }
 })
 
@@ -18,10 +20,16 @@ router.get('/', authToken, async (req, res) => {
 router.get('/:id', authToken, async (req, res) => {
     try {
         const id = req.params.id;
-        const getOrder = await prisma.order.findMany({where: {id: id}});
+        const getOrder = await prisma.order.findMany({
+            where: {
+                id: id
+            }
+        });
         res.json(getOrder);
     } catch (_err) {
-        res.status(500).json({error: _err.message});
+        res.status(500).json({
+            error: _err.message
+        });
     }
 })
 
@@ -29,10 +37,16 @@ router.get('/:id', authToken, async (req, res) => {
 router.delete('/:id', authToken, async (req, res) => {
     try {
         const id = req.params.id;
-        const deleteOrder = await prisma.order.delete({where: {id: id}});
+        const deleteOrder = await prisma.order.delete({
+            where: {
+                id: id
+            }
+        });
         res.json(deleteOrder);
     } catch (_err) {
-        res.status(500).json({error: _err.message});
+        res.status(500).json({
+            error: _err.message
+        });
     }
 })
 
@@ -42,7 +56,9 @@ router.put('/:id', authToken, async (req, res) => {
         const id = req.params.id;
         const {customerId, addressId} = req.body;
         const updateOrder = await prisma.order.update({
-            where: {id: id},
+            where: {
+                id: id
+            },
             data: {
                 complete: false,
                 customerId: customerId,
@@ -51,7 +67,9 @@ router.put('/:id', authToken, async (req, res) => {
         });
         res.json(updateOrder);
     } catch (_err) {
-        res.status(500).json({error: _err.message});
+        res.status(500).json({
+            error: _err.message
+        });
     }
 })
 
@@ -68,7 +86,9 @@ router.post('/', authToken, async (req, res) => {
         });
         res.json(addOrder);
     } catch (_err) {
-        res.status(500).json({error: _err.message});
+        res.status(500).json({
+            error: _err.message
+        });
     }
 })
 

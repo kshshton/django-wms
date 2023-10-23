@@ -1,8 +1,9 @@
+import DataTable from '../DataTable.jsx';
 
 const Products = () => {
     return (
         <div>
-            <h2>Products</h2>
+            <DataTable />
         </div>
     );
 }
