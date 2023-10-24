@@ -27,7 +27,8 @@ export default function SignIn() {
                 email: data.get('email'),
                 password: data.get('password')
             })
-        }).then(r => r.json());
+        }).then(r => r.json())
+            .then(item => localStorage.setItem('accessToken', item.accessToken));
     };
 
     return (

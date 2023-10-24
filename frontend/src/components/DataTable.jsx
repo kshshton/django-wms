@@ -11,45 +11,31 @@ import {
     DataGrid,
     GridToolbarContainer,
     GridActionsCellItem,
-    GridRowEditStopReasons,
 } from '@mui/x-data-grid';
-import {
-    randomCreatedDate,
-    randomTraderName,
-    randomId,
-    randomArrayItem,
-} from '@mui/x-data-grid-generator';
 import {useEffect} from "react";
 
-const roles = ['Market', 'Finance', 'Development'];
-const randomRole = () => {
-    return randomArrayItem(roles);
-};
+
+// function EditToolbar(props) {
+//     const { setRows, setRowModesModel } = props;
 
 
+    // const handleClick = () => {
+    //     const id = randomId();
+    //     setRows((oldRows) => [...oldRows, { id, name: '', category: '', quantity: 0 }]);
+    //     setRowModesModel((oldModel) => ({
+    //         ...oldModel,
+    //         [id]: { mode: GridRowModes.Edit, fieldToFocus: 'name' },
+    //     }));
+    // };
 
-
-function EditToolbar(props) {
-    const { setRows, setRowModesModel } = props;
-
-
-    const handleClick = () => {
-        const id = randomId();
-        setRows((oldRows) => [...oldRows, { id, name: '', category: '', quantity: 0 }]);
-        setRowModesModel((oldModel) => ({
-            ...oldModel,
-            [id]: { mode: GridRowModes.Edit, fieldToFocus: 'name' },
-        }));
-    };
-
-    return (
-        <GridToolbarContainer>
-            <Button color="primary" startIcon={<AddIcon />} onClick={handleClick}>
-                Add record
-            </Button>
-        </GridToolbarContainer>
-    );
-}
+    // return (
+    //     <GridToolbarContainer>
+    //         <Button color="primary" startIcon={<AddIcon />} onClick={handleClick}>
+    //             Add record
+    //         </Button>
+    //     </GridToolbarContainer>
+    // );
+// }
 
 export default function DataTable() {
     const [rows, setRows] = React.useState([]);
@@ -62,52 +48,52 @@ export default function DataTable() {
             headers: {
                 'Content-Type': 'application/json',
                 'Access-Control-Allow-Origin': '*',
-                'Authorization': `Bearer ${token}`
+                'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
             },
         }).then(r => r.json());
 
         setRows(data);
     });
 
-    const handleRowEditStop = (params, event) => {
-        if (params.reason === GridRowEditStopReasons.rowFocusOut) {
-            event.defaultMuiPrevented = true;
-        }
-    };
-
-    const handleEditClick = (id) => () => {
-        setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.Edit } });
-    };
-
-    const handleSaveClick = (id) => () => {
-        setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.View } });
-    };
-
-    const handleDeleteClick = (id) => () => {
-        setRows(rows.filter((row) => row.id !== id));
-    };
-
-    const handleCancelClick = (id) => () => {
-        setRowModesModel({
-            ...rowModesModel,
-            [id]: { mode: GridRowModes.View, ignoreModifications: true },
-        });
-
-        const editedRow = rows.find((row) => row.id === id);
-        if (editedRow.isNew) {
-            setRows(rows.filter((row) => row.id !== id));
-        }
-    };
-
-    const processRowUpdate = (newRow) => {
-        const updatedRow = { ...newRow, isNew: false };
-        setRows(rows.map((row) => (row.id === newRow.id ? updatedRow : row)));
-        return updatedRow;
-    };
-
-    const handleRowModesModelChange = (newRowModesModel) => {
-        setRowModesModel(newRowModesModel);
-    };
+    // const handleRowEditStop = (params, event) => {
+    //     if (params.reason === GridRowEditStopReasons.rowFocusOut) {
+    //         event.defaultMuiPrevented = true;
+    //     }
+    // };
+    //
+    // const handleEditClick = (id) => () => {
+    //     setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.Edit } });
+    // };
+    //
+    // const handleSaveClick = (id) => () => {
+    //     setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.View } });
+    // };
+    //
+    // const handleDeleteClick = (id) => () => {
+    //     setRows(rows.filter((row) => row.id !== id));
+    // };
+    //
+    // const handleCancelClick = (id) => () => {
+    //     setRowModesModel({
+    //         ...rowModesModel,
+    //         [id]: { mode: GridRowModes.View, ignoreModifications: true },
+    //     });
+    //
+    //     const editedRow = rows.find((row) => row.id === id);
+    //     if (editedRow.isNew) {
+    //         setRows(rows.filter((row) => row.id !== id));
+    //     }
+    // };
+    //
+    // const processRowUpdate = (newRow) => {
+    //     const updatedRow = { ...newRow, isNew: false };
+    //     setRows(rows.map((row) => (row.id === newRow.id ? updatedRow : row)));
+    //     return updatedRow;
+    // };
+    //
+    // const handleRowModesModelChange = (newRowModesModel) => {
+    //     setRowModesModel(newRowModesModel);
+    // };
 
     const columns = [
         { field: 'id', headerName: 'Name', width: 180, editable: true },
@@ -152,13 +138,13 @@ export default function DataTable() {
                             sx={{
                                 color: 'primary.main',
                             }}
-                            onClick={handleSaveClick(id)}
+                            // onClick={handleSaveClick(id)}
                         />,
                         <GridActionsCellItem
                             icon={<CancelIcon />}
                             label="Cancel"
                             className="textPrimary"
-                            onClick={handleCancelClick(id)}
+                            // onClick={handleCancelClick(id)}
                             color="inherit"
                         />,
                     ];
@@ -169,13 +155,13 @@ export default function DataTable() {
                         icon={<EditIcon />}
                         label="Edit"
                         className="textPrimary"
-                        onClick={handleEditClick(id)}
+                        // onClick={handleEditClick(id)}
                         color="inherit"
                     />,
                     <GridActionsCellItem
                         icon={<DeleteIcon />}
                         label="Delete"
-                        onClick={handleDeleteClick(id)}
+                        // onClick={handleDeleteClick(id)}
                         color="inherit"
                     />,
                 ];
