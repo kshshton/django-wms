@@ -4,17 +4,16 @@ const prisma = new PrismaClient()
 
 async function main() {
     // const password = "123test#";
-    // const user = await prisma.user.create({
-    //     data: {
-    //         firstName: "Janusz",
-    //         lastName: "Tracz",
-    //         password: "test123",
-    //         email: "jtracz@gmail.com"
-    //     }
-    // });
+    const addData = await prisma.product.create({
+        data: {
+            name: "Adidas Gazelle",
+            category: "Buty",
+            quantity: 4
+        }
+    });
 
-    const _delete = await prisma.address.deleteMany();
-    console.log(_delete);
+    // const _delete = await prisma.address.deleteMany();
+    console.log(addData);
 }
 
 main()

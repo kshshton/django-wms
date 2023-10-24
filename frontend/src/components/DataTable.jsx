@@ -19,56 +19,23 @@ import {
     randomId,
     randomArrayItem,
 } from '@mui/x-data-grid-generator';
+import {useEffect} from "react";
 
 const roles = ['Market', 'Finance', 'Development'];
 const randomRole = () => {
     return randomArrayItem(roles);
 };
 
-const initialRows = [
-    {
-        id: randomId(),
-        name: randomTraderName(),
-        age: 25,
-        joinDate: randomCreatedDate(),
-        role: randomRole(),
-    },
-    {
-        id: randomId(),
-        name: randomTraderName(),
-        age: 36,
-        joinDate: randomCreatedDate(),
-        role: randomRole(),
-    },
-    {
-        id: randomId(),
-        name: randomTraderName(),
-        age: 19,
-        joinDate: randomCreatedDate(),
-        role: randomRole(),
-    },
-    {
-        id: randomId(),
-        name: randomTraderName(),
-        age: 28,
-        joinDate: randomCreatedDate(),
-        role: randomRole(),
-    },
-    {
-        id: randomId(),
-        name: randomTraderName(),
-        age: 23,
-        joinDate: randomCreatedDate(),
-        role: randomRole(),
-    },
-];
+
+
 
 function EditToolbar(props) {
     const { setRows, setRowModesModel } = props;
 
+
     const handleClick = () => {
         const id = randomId();
-        setRows((oldRows) => [...oldRows, { id, name: '', age: '', isNew: true }]);
+        setRows((oldRows) => [...oldRows, { id, name: '', category: '', quantity: 0 }]);
         setRowModesModel((oldModel) => ({
             ...oldModel,
             [id]: { mode: GridRowModes.Edit, fieldToFocus: 'name' },
@@ -85,8 +52,22 @@ function EditToolbar(props) {
 }
 
 export default function DataTable() {
-    const [rows, setRows] = React.useState(initialRows);
+    const [rows, setRows] = React.useState([]);
     const [rowModesModel, setRowModesModel] = React.useState({});
+
+
+    useEffect(async () => {
+        const data = await fetch('http://127.0.0.1:8000/api/products/', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+                'Authorization': `Bearer ${token}`
+            },
+        }).then(r => r.json());
+
+        setRows(data);
+    });
 
     const handleRowEditStop = (params, event) => {
         if (params.reason === GridRowEditStopReasons.rowFocusOut) {
@@ -129,11 +110,11 @@ export default function DataTable() {
     };
 
     const columns = [
-        { field: 'name', headerName: 'Name', width: 180, editable: true },
+        { field: 'id', headerName: 'Name', width: 180, editable: true },
         {
-            field: 'age',
-            headerName: 'Age',
-            type: 'number',
+            field: 'id',
+            headerName: 'Id',
+            type: 'string',
             width: 80,
             align: 'left',
             headerAlign: 'left',
