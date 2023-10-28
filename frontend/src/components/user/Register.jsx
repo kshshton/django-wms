@@ -17,7 +17,7 @@ export default function SignUp() {
     const handleSubmit = async (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        fetch('http://localhost:8000/api/users/create', {
+        fetch('http://127.0.0.1:8000/api/user', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

@@ -1,9 +1,9 @@
-import DataTable from '../DataTable.jsx';
+import DataGridWrapper from '../DataGridWrapper.jsx';
 
 const Products = () => {
     return (
         <div>
-            <DataTable />
+            <DataGridWrapper />
         </div>
     );
 }
