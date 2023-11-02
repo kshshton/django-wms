@@ -33,11 +33,23 @@ function EditToolbar(props) {
 
     const handleClick = () => {
         const id = randomId();
-        setRows((oldRows) => [...oldRows, { id, name: '', quantity: '', isNew: true }]);
+        setRows((oldRows) => [...oldRows, { id, name: '', quantity: '', category: '', isNew: true }]);
         setRowModesModel((oldModel) => ({
             ...oldModel,
             [id]: { mode: GridRowModes.Edit, fieldToFocus: 'name' },
         }));
+
+        fetch('http://127.0.0.1:8000/api/products/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+                'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+            },
+            body: JSON.stringify({
+                id
+            })
+        }).then(r => r.json());
     };
 
     return (
@@ -69,6 +81,16 @@ export default function FullFeaturedCrudGrid() {
 
     const handleDeleteClick = (id) => () => {
         setRows(rows.filter((row) => row.id !== id));
+        const target = rows.find(obj => obj.id === id);
+
+        fetch(`http://127.0.0.1:8000/api/products/${target.id}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+                'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+            },
+        }).then(r => r.json());
     };
 
     const handleCancelClick = (id) => () => {
@@ -86,6 +108,21 @@ export default function FullFeaturedCrudGrid() {
     const processRowUpdate = (newRow) => {
         const updatedRow = { ...newRow, isNew: false };
         setRows(rows.map((row) => (row.id === newRow.id ? updatedRow : row)));
+
+        fetch(`http://127.0.0.1:8000/api/products/${updatedRow.id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+                'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+            },
+            body: JSON.stringify({
+                name: updatedRow.name,
+                category: updatedRow.category,
+                quantity: updatedRow.quantity
+            })
+        }).then(r => r.json());
+
         return updatedRow;
     };
 
@@ -94,6 +131,12 @@ export default function FullFeaturedCrudGrid() {
     };
 
     const columns = [
+        {
+            field: 'id',
+            headerName: 'Id',
+            width: 180,
+            editable: true
+        },
         {
             field: 'name',
             headerName: 'Name',

@@ -11,7 +11,7 @@ router.get('/:id', authToken, async (req, res) => {
         const id = req.params.id;
         const getCustomer = await prisma.customer.findFirstOrThrow({
             where: {
-                id: id
+                id
             }
         });
         res.json(getCustomer);
@@ -28,7 +28,7 @@ router.delete('/:id', authToken, async (req, res) => {
         const id = req.params.id;
         const deleteCustomer = await prisma.customer.delete({
             where: {
-                id: id
+                id
             }
         });
         res.json(deleteCustomer);
@@ -46,13 +46,13 @@ router.put('/:id', authToken, async (req, res) => {
         const {firstName, lastName, email, phone} = req.body;
         const updateCustomer = await prisma.customer.update({
             where: {
-                id: id
+                id
             },
             data: {
-                firstName: firstName,
-                lastName: lastName,
-                email: email,
-                phone: phone
+                firstName,
+                lastName,
+                email,
+                phone
             }
         });
         res.json(updateCustomer);
@@ -69,10 +69,10 @@ router.post('/', authToken, async (req, res) => {
         const {firstName, lastName, email, phone} = req.body;
         const createCustomer = await prisma.customer.create({
             data: {
-                firstName: firstName,
-                lastName: lastName,
-                email: email,
-                phone: phone
+                firstName,
+                lastName,
+                email,
+                phone
             }
         });
         res.json(createCustomer);

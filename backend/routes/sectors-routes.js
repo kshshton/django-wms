@@ -22,7 +22,7 @@ router.get('/:id', authToken, async (req, res) => {
         const id = parseInt(req.params.id);
         const getSector = await prisma.sector.findMany({
             where: {
-                id: id
+                id
             }
         });
         res.json(getSector);
@@ -39,7 +39,7 @@ router.delete('/:id', authToken, async (req, res) => {
         const id = parseInt(req.params.id);
         const deleteSector = await prisma.sector.delete({
             where: {
-                id: id
+                id
             }
         });
         res.json(deleteSector);
@@ -57,10 +57,10 @@ router.put('/:id', authToken, async (req, res) => {
         const {name} = req.body;
         const updateSector = await prisma.sector.update({
             where: {
-                id: id
+                id
             },
             data: {
-                name: name
+                name
             }
         });
         res.json(updateSector);
@@ -77,8 +77,8 @@ router.post('/', authToken, async (req, res) => {
         const {id, name} = req.body;
         const addSector = await prisma.sector.create({
             data: {
-                id: id,
-                name: name,
+                id,
+                name,
             }
         });
         res.json(addSector);

@@ -20,24 +20,24 @@ model User {
 }
 
 model Sector {
-  id       Int       @unique
-  name     String    @unique
+  id       String    @id @map("id")
+  name     String?   @unique
   products Product[]
 }
 
 model Product {
-  id       String  @id @default(uuid()) @map("id")
-  name     String
-  category String
-  quantity Int
+  id       String  @id @map("id")
+  name     String?
+  category String?
+  quantity Int?
   order    Order?  @relation(fields: [orderId], references: [id])
   orderId  String?
   sector   Sector? @relation(fields: [sectorId], references: [id])
-  sectorId Int?
+  sectorId String?
 }
 
 model Order {
-  id         String    @id @default(uuid()) @map("id")
+  id         String    @id @map("id")
   customer   Customer  @relation(fields: [customerId], references: [id])
   customerId String
   address    Address   @relation(fields: [addressId], references: [id])

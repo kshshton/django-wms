@@ -11,7 +11,7 @@ router.get('/:id', authToken, async (req, res) => {
         const id = req.params.id;
         const getAddress = await prisma.address.findMany({
             where: {
-                id: id
+                id
             }
         });
         res.json(getAddress);
@@ -28,7 +28,7 @@ router.delete('/:id', authToken, async (req, res) => {
         const id = req.params.id;
         const deleteAddress = await prisma.address.delete({
             where: {
-                id: id
+                id
             }
         });
         res.json(deleteAddress);
@@ -47,12 +47,12 @@ router.put('/:id', authToken, async (req, res) => {
         const updateAddress = await prisma.address.update({
             where: {id: id},
             data: {
-                city: city,
-                state: state,
-                country: country,
-                streetName: streetName,
-                buildingNumber: buildingNumber,
-                apartmentNumber: apartmentNumber
+                city,
+                state,
+                country,
+                streetName,
+                buildingNumber,
+                apartmentNumber
             }
         });
         res.json(updateAddress);
@@ -69,12 +69,12 @@ router.post('/', authToken, async (req, res) => {
         const {city, state, country, streetName, buildingNumber, apartmentNumber} = req.body;
         const addAddress = await prisma.address.create({
             data: {
-                city: city,
-                state: state,
-                country: country,
-                streetName: streetName,
-                buildingNumber: buildingNumber,
-                apartmentNumber: apartmentNumber
+                city,
+                state,
+                country,
+                streetName,
+                buildingNumber,
+                apartmentNumber
             }
         });
         res.json(addAddress);

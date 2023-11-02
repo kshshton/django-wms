@@ -22,7 +22,7 @@ router.get('/:id', authToken, async (req, res) => {
         const id = req.params.id;
         const getProduct = await prisma.product.findMany({
             where: {
-                id: id
+                id
             }
         });
         res.json(getProduct);
@@ -39,7 +39,7 @@ router.delete('/:id', authToken, async (req, res) => {
         const id = req.params.id;
         const deleteProduct = await prisma.product.delete({
             where: {
-                id: id
+                id
             }
         });
         res.json(deleteProduct);
@@ -57,12 +57,12 @@ router.put('/:id', authToken, async (req, res) => {
         const {name, category, quantity} = req.body;
         const updateProduct = await prisma.product.update({
             where: {
-                id: id
+                id
             },
             data: {
-                name: name,
-                category: category,
-                quantity: quantity
+                name,
+                category,
+                quantity
             }
         });
         res.json(updateProduct);
@@ -76,12 +76,10 @@ router.put('/:id', authToken, async (req, res) => {
 
 router.post('/', authToken, async (req, res) => {
     try {
-        const {name, category, quantity} = req.body;
+        const {id} = req.body;
         const addProduct = await prisma.product.create({
             data: {
-                name: name,
-                category: category,
-                quantity: quantity
+                id
             }
         });
         res.json(addProduct);

@@ -24,7 +24,7 @@ router.get('/:id', authToken, async (req, res) => {
         const id = req.params.id;
         const getUser = await prisma.user.findMany({
             where: {
-                id: id
+                id
             }
         });
         res.json(getUser);
@@ -41,7 +41,7 @@ router.delete('/:id', authToken, async (req, res) => {
         const id = req.params.id;
         const deleteUser = await prisma.user.delete({
             where: {
-                id: id
+                id
             }
         });
         res.json(deleteUser);
@@ -60,13 +60,13 @@ router.put('/:id', async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, 10);
         const updateUser = await prisma.user.update({
             where: {
-                id: id
+                id
             },
             data: {
-                firstName: firstName,
-                lastName: lastName,
-                password: hashedPassword,
-                email: email
+                firstName,
+                lastName,
+                hashedPassword,
+                email
             }
         });
         res.json(updateUser);
@@ -84,10 +84,10 @@ router.post('/', async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, 10);
         const createUser = await prisma.user.create({
             data: {
-                firstName: firstName,
-                lastName: lastName,
-                password: hashedPassword,
-                email: email
+                firstName,
+                lastName,
+                hashedPassword,
+                email
             }
         });
         res.json(createUser);
