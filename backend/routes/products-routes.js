@@ -54,7 +54,7 @@ router.delete('/:id', authToken, async (req, res) => {
 router.put('/:id', authToken, async (req, res) => {
     try {
         const id = req.params.id;
-        const {name, category, quantity} = req.body;
+        const {name, category, quantity, sectorName} = req.body;
         const updateProduct = await prisma.product.update({
             where: {
                 id
@@ -62,7 +62,8 @@ router.put('/:id', authToken, async (req, res) => {
             data: {
                 name,
                 category,
-                quantity
+                quantity,
+                sectorName
             }
         });
         res.json(updateProduct);

@@ -61,8 +61,8 @@ router.put('/:id', authToken, async (req, res) => {
             },
             data: {
                 complete: false,
-                customerId: customerId,
-                addressId: addressId
+                customerId,
+                addressId
             }
         });
         res.json(updateOrder);
@@ -76,12 +76,11 @@ router.put('/:id', authToken, async (req, res) => {
 
 router.post('/', authToken, async (req, res) => {
     try {
-        const {customerId, addressId} = req.body;
+        const {id} = req.body;
         const addOrder = await prisma.order.create({
             data: {
                 complete: false,
-                customerId,
-                addressId
+                id,
             }
         });
         res.json(addOrder);
