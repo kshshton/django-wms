@@ -16,16 +16,7 @@ import {
 import {
     randomId,
 } from '@mui/x-data-grid-generator';
-
-
-const initialRows = await fetch('http://127.0.0.1:8000/api/sectors', {
-    method: 'GET',
-    headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-        'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
-    },
-}).then(r => r.json());
+import {sectors} from "../../utils/Init.js";
 
 
 function EditToolbar(props) {
@@ -62,7 +53,7 @@ function EditToolbar(props) {
 }
 
 export default function Sectors() {
-    const [rows, setRows] = React.useState(initialRows);
+    const [rows, setRows] = React.useState(sectors);
     const [rowModesModel, setRowModesModel] = React.useState({});
 
     const handleRowEditStop = (params, event) => {

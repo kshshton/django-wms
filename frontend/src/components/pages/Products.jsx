@@ -16,27 +16,11 @@ import {
 import {
     randomId,
 } from '@mui/x-data-grid-generator';
+import {products, sectors} from "../../utils/Init.js";
+import {tokenRefresh} from "../../utils/TokenRefresh.js";
 
 
-const initialRows = await fetch('http://127.0.0.1:8000/api/products', {
-    method: 'GET',
-    headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-        'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
-    },
-}).then(r => r.json());
-
-
-const sectors = await fetch('http://127.0.0.1:8000/api/sectors', {
-    method: 'GET',
-    headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-        'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
-    },
-}).then(r => r.json());
-
+tokenRefresh();
 
 function EditToolbar(props) {
     const { setRows, setRowModesModel } = props;
@@ -79,7 +63,7 @@ function EditToolbar(props) {
 }
 
 export default function Products() {
-    const [rows, setRows] = React.useState(initialRows);
+    const [rows, setRows] = React.useState(products);
     const [rowModesModel, setRowModesModel] = React.useState({});
 
     const handleRowEditStop = (params, event) => {

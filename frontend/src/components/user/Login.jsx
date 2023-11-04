@@ -27,8 +27,12 @@ export default function SignIn() {
                 email: data.get('email'),
                 password: data.get('password')
             })
-        }).then(r => r.json())
-            .then(item => localStorage.setItem('accessToken', item.accessToken));
+        })
+            .then(r => r.json())
+            .then(item => {
+                localStorage.setItem('accessToken', item.accessToken)
+                localStorage.setItem('refreshToken', item.refreshToken)
+            });
     };
 
     return (

@@ -28,14 +28,16 @@ router.post('/login', async (req, res) => {
     }
 })
 
-router.get('/refresh_token', (req, res) => {
+router.post('/refresh_token', (req, res) => {
     try {
-        const refreshToken = req.cookies.refresh_token;
+        const {refreshToken} = req.body;
+
         if (refreshToken === null) {
             return res.status(401).json({
                 message: 'null refresh token'
             });
         }
+
         jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
             if (err) {
                 return res.status(403).json({
@@ -43,7 +45,9 @@ router.get('/refresh_token', (req, res) => {
                 });
             }
             let tokens = jwtTokens(user);
-            res.cookie('refresh_token', tokens.refreshToken, {httpOnly: true});
+            res.cookie('refresh_token', tokens.refreshToken, {
+                httpOnly: true,
+            });
             res.json(tokens);
         });
     } catch (_err) {
