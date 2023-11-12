@@ -74,7 +74,6 @@ export default function Products() {
 
     const handleEditClick = (id) => () => {
         setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.Edit } });
-        console.log(sectorsEnumContent);
     };
 
     const handleSaveClick = (id) => () => {
@@ -168,7 +167,7 @@ export default function Products() {
             width: 100,
             editable: true,
             type: 'singleSelect',
-            valueOptions: sectors.map(sector => sector.name),
+            valueOptions: sectors?.map(sector => sector.name)
         },
         {
             field: 'actions',

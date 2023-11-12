@@ -17,7 +17,10 @@ import {
     randomId,
 } from '@mui/x-data-grid-generator';
 import {sectors} from "../../utils/Init.js";
+import {tokenRefresh} from "../../utils/TokenRefresh.js";
 
+
+tokenRefresh();
 
 function EditToolbar(props) {
     const { setRows, setRowModesModel } = props;
