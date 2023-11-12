@@ -6,7 +6,19 @@ const prisma = new PrismaClient()
 const router = express.Router();
 
 
-router.get('/:id', authToken, async (req, res) => {
+router.get('/', authToken, async (req, res) => {
+    try {
+        const getCustomer = await prisma.customer.findMany();
+        res.json(getCustomer);
+    } catch (_err) {
+        res.status(500).json({
+            error: _err.message
+        });
+    }
+})
+
+
+router.get('/:id', async (req, res) => {
     try {
         const id = req.params.id;
         const getCustomer = await prisma.customer.findFirstOrThrow({
@@ -23,7 +35,7 @@ router.get('/:id', authToken, async (req, res) => {
 })
 
 
-router.delete('/:id', authToken, async (req, res) => {
+router.delete('/:id', async (req, res) => {
     try {
         const id = req.params.id;
         const deleteCustomer = await prisma.customer.delete({
@@ -40,7 +52,7 @@ router.delete('/:id', authToken, async (req, res) => {
 })
 
 
-router.put('/:id', authToken, async (req, res) => {
+router.put('/:id', async (req, res) => {
     try {
         const id = req.params.id;
         const {firstName, lastName, email, phone} = req.body;
@@ -64,7 +76,7 @@ router.put('/:id', authToken, async (req, res) => {
 })
 
 
-router.post('/', authToken, async (req, res) => {
+router.post('/', async (req, res) => {
     try {
         const {firstName, lastName, email, phone} = req.body;
         const createCustomer = await prisma.customer.create({

@@ -17,7 +17,7 @@ router.get('/', authToken, async (req, res) => {
 })
 
 
-router.get('/:id', authToken, async (req, res) => {
+router.get('/:id', async (req, res) => {
     try {
         const id = req.params.id;
         const getOrder = await prisma.order.findMany({
@@ -34,7 +34,7 @@ router.get('/:id', authToken, async (req, res) => {
 })
 
 
-router.delete('/:id', authToken, async (req, res) => {
+router.delete('/:id', async (req, res) => {
     try {
         const id = req.params.id;
         const deleteOrder = await prisma.order.delete({
@@ -54,15 +54,15 @@ router.delete('/:id', authToken, async (req, res) => {
 router.put('/:id', authToken, async (req, res) => {
     try {
         const id = req.params.id;
-        const {customerId, addressId} = req.body;
+        const {complete, addressId, userId} = req.body;
         const updateOrder = await prisma.order.update({
             where: {
                 id
             },
             data: {
-                complete: false,
-                customerId,
-                addressId
+                complete,
+                addressId,
+                userId
             }
         });
         res.json(updateOrder);
@@ -74,13 +74,14 @@ router.put('/:id', authToken, async (req, res) => {
 })
 
 
-router.post('/', authToken, async (req, res) => {
+router.post('/', async (req, res) => {
     try {
-        const {id} = req.body;
+        const {id, addressId} = req.body;
         const addOrder = await prisma.order.create({
             data: {
                 complete: false,
                 id,
+                addressId
             }
         });
         res.json(addOrder);
