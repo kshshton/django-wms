@@ -1,10 +1,8 @@
 import React from 'react';
-import {CustomerForm} from './components/CustomerForm';
+import {AddressForm} from './components/AddressForm';
 
 const App = () => {
-  return (
-    <CustomerForm />
-  );
+  return <AddressForm />;
 };
 
 export default App;

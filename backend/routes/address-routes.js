@@ -55,13 +55,12 @@ router.delete('/:id', async (req, res) => {
 router.put('/:id', async (req, res) => {
     try {
         const id = req.params.id;
-        const {city, state, country, streetName, buildingNumber, apartmentNumber, customerEmail} = req.body;
+        const {city, state, streetName, buildingNumber, apartmentNumber, customerEmail} = req.body;
         const updateAddress = await prisma.address.update({
             where: {id: id},
             data: {
                 city,
                 state,
-                country,
                 streetName,
                 buildingNumber,
                 apartmentNumber,
@@ -79,12 +78,11 @@ router.put('/:id', async (req, res) => {
 
 router.post('/', async (req, res) => {
     try {
-        const {city, state, country, streetName, buildingNumber, apartmentNumber, customerEmail} = req.body;
+        const {city, state, streetName, buildingNumber, apartmentNumber, customerEmail} = req.body;
         const addAddress = await prisma.address.create({
             data: {
                 city,
                 state,
-                country,
                 streetName,
                 buildingNumber,
                 apartmentNumber,

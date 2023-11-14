@@ -6,4 +6,5 @@ export const colors = StyleSheet.create({
   red: '#FF0D10',
   gray: '#395B64',
   white: '#FFF',
+  turquoise: '#A5C9CA',
 });
