@@ -15,5 +15,6 @@ export const tokenRefresh = () => {
         .then(item => {
             localStorage.setItem('accessToken', item.accessToken)
             localStorage.setItem('refreshToken', item.refreshToken)
-        });
+        })
+        .catch();
 }

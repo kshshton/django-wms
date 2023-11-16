@@ -16,11 +16,25 @@ import {
 import {
     randomId,
 } from '@mui/x-data-grid-generator';
-import {products, sectors} from "../../utils/Init.js";
 import {tokenRefresh} from "../../utils/TokenRefresh.js";
 
-
 tokenRefresh();
+
+const products = await fetch('http://127.0.0.1:8000/api/products', {
+    method: 'GET',
+    headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+    },
+}).then(r => r.json()).catch();
+
+const sectors = await fetch('http://127.0.0.1:8000/api/sectors', {
+    method: 'GET',
+    headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+    },
+}).then(r => r.json()).catch();
 
 function EditToolbar(props) {
     const { setRows, setRowModesModel } = props;
@@ -43,7 +57,6 @@ function EditToolbar(props) {
         fetch('http://127.0.0.1:8000/api/products', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
                 'Access-Control-Allow-Origin': '*',
                 'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
             },
@@ -66,6 +79,7 @@ export default function Products() {
     const [rows, setRows] = React.useState(products);
     const [rowModesModel, setRowModesModel] = React.useState({});
 
+
     const handleRowEditStop = (params, event) => {
         if (params.reason === GridRowEditStopReasons.rowFocusOut) {
             event.defaultMuiPrevented = true;
@@ -87,7 +101,6 @@ export default function Products() {
         fetch(`http://127.0.0.1:8000/api/products/${target.id}`, {
             method: 'DELETE',
             headers: {
-                'Content-Type': 'application/json',
                 'Access-Control-Allow-Origin': '*',
                 'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
             },
@@ -113,7 +126,6 @@ export default function Products() {
         fetch(`http://127.0.0.1:8000/api/products/${updatedRow.id}`, {
             method: 'PUT',
             headers: {
-                'Content-Type': 'application/json',
                 'Access-Control-Allow-Origin': '*',
                 'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
             },

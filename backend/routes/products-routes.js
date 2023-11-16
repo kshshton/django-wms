@@ -5,7 +5,7 @@ import {authToken} from "../middlewares/auth.middlewares.js";
 const prisma = new PrismaClient()
 const router = express.Router();
 
-router.get('/', authToken, async (req, res) => {
+router.get('/', async (req, res) => {
     try {
         const getProducts = await prisma.product.findMany();
         res.json(getProducts);
@@ -17,7 +17,7 @@ router.get('/', authToken, async (req, res) => {
 })
 
 
-router.get('/:id', authToken, async (req, res) => {
+router.get('/:id', async (req, res) => {
     try {
         const id = req.params.id;
         const getProduct = await prisma.product.findMany({

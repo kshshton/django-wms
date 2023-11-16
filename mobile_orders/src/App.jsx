@@ -1,8 +1,8 @@
 import React from 'react';
-import {AddressForm} from './components/AddressForm';
+import {ProductList} from './components/ProductList';
 
 const App = () => {
-  return <AddressForm />;
+  return <ProductList />;
 };
 
 export default App;
