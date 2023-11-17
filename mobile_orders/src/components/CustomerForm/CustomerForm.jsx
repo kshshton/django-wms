@@ -1,11 +1,4 @@
-import {
-  Alert,
-  StatusBar,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import {StatusBar, Text, TextInput, TouchableOpacity, View} from 'react-native';
 import styles from './styles';
 import {Formik} from 'formik';
 import * as Yup from 'yup';
@@ -27,7 +20,16 @@ const CustomerFormSchema = Yup.object().shape({
     .optional(),
 });
 
-const CustomerForm = () => {
+const CustomerForm = ({route, navigation}) => {
+  const {products} = route.params;
+  const handleSubmit = values => {
+    const order = {
+      products,
+      customer: values,
+    };
+    navigation.navigate('Adres', {order});
+  };
+
   return (
     <Formik
       initialValues={{
@@ -37,7 +39,7 @@ const CustomerForm = () => {
         phone: '',
       }}
       validationSchema={CustomerFormSchema}
-      onSubmit={values => Alert.alert(JSON.stringify(values))}>
+      onSubmit={values => handleSubmit(values)}>
       {({
         values,
         errors,
@@ -50,8 +52,6 @@ const CustomerForm = () => {
         <View style={styles.wrapper}>
           <StatusBar barStyle={'light-content'} />
           <View style={styles.formContainer}>
-            <Text style={styles.title}>Dane osobowe</Text>
-
             <View style={styles.inputWrapper}>
               <TextInput
                 style={styles.inputStyle}

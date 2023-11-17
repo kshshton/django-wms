@@ -1,11 +1,4 @@
-import {
-  Alert,
-  StatusBar,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import {StatusBar, Text, TextInput, TouchableOpacity, View} from 'react-native';
 import styles from './styles';
 import {Formik} from 'formik';
 import * as Yup from 'yup';
@@ -32,7 +25,17 @@ const CustomerFormSchema = Yup.object().shape({
     .optional(),
 });
 
-const AddressForm = () => {
+const AddressForm = ({route, navigation}) => {
+  const {order} = route.params;
+
+  const handleSubmit = values => {
+    const result = {
+      order,
+      address: values,
+    };
+    console.log(JSON.stringify(result));
+  };
+
   return (
     <Formik
       initialValues={{
@@ -44,7 +47,7 @@ const AddressForm = () => {
         customerEmail: '',
       }}
       validationSchema={CustomerFormSchema}
-      onSubmit={values => Alert.alert(JSON.stringify(values))}>
+      onSubmit={values => handleSubmit(values)}>
       {({
         values,
         errors,
@@ -57,8 +60,6 @@ const AddressForm = () => {
         <View style={styles.wrapper}>
           <StatusBar barStyle={'light-content'} />
           <View style={styles.formContainer}>
-            <Text style={styles.title}>Adres</Text>
-
             <View style={styles.inputWrapper}>
               <TextInput
                 style={styles.inputStyle}
@@ -133,7 +134,7 @@ const AddressForm = () => {
                 {backgroundColor: isValid ? colors.gray : colors.turquoise},
               ]}
               disabled={!isValid}>
-              <Text style={styles.submitBtnTxt}>Dalej</Text>
+              <Text style={styles.submitBtnTxt}>Zamów</Text>
             </TouchableOpacity>
           </View>
         </View>

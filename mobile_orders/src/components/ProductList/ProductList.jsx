@@ -1,12 +1,12 @@
-import {Alert, StatusBar, Text, TouchableOpacity, View} from 'react-native';
-import styles from './styles';
-import {useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
+import {Button, FlatList, Text, View} from 'react-native';
 import CheckBox from 'react-native-check-box';
-import {colors} from '../../config/colors';
 
-const ProductList = () => {
+const ProductList = ({navigation}) => {
   const [isLoading, setLoading] = useState(true);
   const [data, setData] = useState([]);
+  const [checkedNames, setCheckedNames] = useState([]);
+  // const navigation = useNavigation();
 
   const getProducts = async () => {
     return await fetch('http://192.168.0.167:8000/api/products', {
@@ -37,42 +37,43 @@ const ProductList = () => {
     );
   }
 
-  return (
-    <View style={styles.wrapper}>
-      <StatusBar barStyle={'light-content'} />
-      <View style={styles.formContainer}>
-        <Text style={styles.title}>Produkty</Text>
-        {data.map((value, id) => (
-          <View style={styles.inputWrapper}>
-            <Product id={id} data={value} />
-          </View>
-        ))}
-        <TouchableOpacity
-          onPress={() => Alert.alert()}
-          style={[styles.submitBtn, {backgroundColor: colors.gray}]}>
-          <Text style={styles.submitBtnTxt}>Dalej</Text>
-        </TouchableOpacity>
-      </View>
-    </View>
-  );
-};
+  const handleCheckboxChange = id => {
+    const newCheckedNames = [...checkedNames];
+    const index = newCheckedNames.indexOf(id);
 
-const Product = ({id, data}) => {
-  const [isChecked, setIsChecked] = useState(false);
+    if (index !== -1) {
+      newCheckedNames.splice(index, 1);
+    } else {
+      newCheckedNames.push(id);
+    }
 
-  const handleCheckboxToggle = () => {
-    const checkboxValue = !isChecked;
-    setIsChecked(checkboxValue);
-
-    console.log(checkboxValue);
+    setCheckedNames(newCheckedNames);
   };
 
+  const handleSubmit = () => {
+    const products = data.filter(item => checkedNames.includes(item.id));
+    navigation.navigate('Dane osobowe', {products});
+  };
+
+  const renderItem = ({item}) => (
+    <View
+      style={{flexDirection: 'row', alignItems: 'center', marginVertical: 5}}>
+      <CheckBox
+        isChecked={checkedNames.includes(item.id)}
+        onClick={() => handleCheckboxChange(item.id)}
+      />
+      <Text style={{marginLeft: 10}}>{item.name}</Text>
+    </View>
+  );
+
   return (
-    <View style={styles.inputWrapper} key={id}>
-      <View style={styles.checkboxWrapper}>
-        <CheckBox isChecked={isChecked} onClick={handleCheckboxToggle} />
-      </View>
-      <Text style={styles.inputStyle}>{data.name}</Text>
+    <View style={{flex: 1, padding: 20}}>
+      <FlatList
+        data={data}
+        renderItem={renderItem}
+        keyExtractor={item => item.id.toString()}
+      />
+      <Button title="Wybierz" onPress={handleSubmit} />
     </View>
   );
 };
