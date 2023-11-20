@@ -63,8 +63,11 @@ const ProductList = ({navigation}) => {
     const checkedProducts = data.filter(item => checkedNames.includes(item.id));
     const products = checkedProducts.map(product => ({
       ...product,
-      quantity: itemQuantities[product.id].quantity,
+      quantity:
+        (itemQuantities[product.id] && itemQuantities[product.id].quantity) ||
+        1,
     }));
+
     navigation.navigate('Dane osobowe', {products});
   };
 

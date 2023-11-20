@@ -11,6 +11,13 @@ import {Formik} from 'formik';
 import * as Yup from 'yup';
 import {colors} from '../../config/colors';
 import {v4} from 'react-native-uuid/src/v4';
+import {
+  sendAddressData,
+  sendCustomerData,
+  sendOrder,
+  sendProducts,
+  updateDatabaseProducts,
+} from '../../utils/database';
 
 const CustomerFormSchema = Yup.object().shape({
   city: Yup.string()
@@ -46,56 +53,15 @@ const AddressForm = ({route, navigation}) => {
       orderId: order.id,
     }));
 
-    await fetch('http://192.168.0.167:8000/api/customer', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-      },
-      body: JSON.stringify({
-        id: v4(),
-        firstName: order.customer.firstName,
-        lastName: order.customer.lastName,
-        email: order.customer.email,
-        phone: order.customer.phone || null,
-      }),
-    })
-      .then(res => res.json())
-      .catch(_err => console.error(_err));
+    await sendCustomerData(order.customer);
 
-    await fetch('http://192.168.0.167:8000/api/address', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-      },
-      body: JSON.stringify({
-        id: order.address.id,
-        city: order.address.city,
-        state: order.address.state,
-        streetName: order.address.streetName,
-        buildingNumber: order.address.buildingNumber,
-        apartmentNumber: order.address.apartmentNumber,
-        customerEmail: order.customer.email,
-      }),
-    })
-      .then(res => res.json())
-      .catch(_err => console.error(_err));
+    await sendAddressData(order.address, order.customer);
 
-    const r = await fetch('http://192.168.0.167:8000/api/orders', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-      },
-      body: JSON.stringify({
-        id: order.id,
-        addressId: order.address.id,
-        cart: order.products,
-      }),
-    });
+    await sendOrder(order);
 
-    console.log(await r.json());
+    await updateDatabaseProducts(order.products);
+
+    await sendProducts(order.products);
 
     Alert.alert('Wysłano!');
   };

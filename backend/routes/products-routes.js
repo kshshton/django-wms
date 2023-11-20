@@ -51,7 +51,7 @@ router.delete('/:id', authToken, async (req, res) => {
 })
 
 
-router.put('/:id', authToken, async (req, res) => {
+router.put('/:id',  async (req, res) => {
     try {
         const id = req.params.id;
         const {name, category, quantity, sectorName} = req.body;
@@ -63,7 +63,7 @@ router.put('/:id', authToken, async (req, res) => {
                 name,
                 category,
                 quantity,
-                sectorName
+                sectorName,
             }
         });
         res.json(updateProduct);
@@ -75,7 +75,7 @@ router.put('/:id', authToken, async (req, res) => {
 })
 
 
-router.post('/', authToken, async (req, res) => {
+router.post('/', authToken ,async (req, res) => {
     try {
         const {id} = req.body;
         const addProduct = await prisma.product.create({
@@ -91,5 +91,25 @@ router.post('/', authToken, async (req, res) => {
     }
 })
 
+router.post('/order',  async (req, res) => {
+    try {
+        const {id, name, category, sectorName, quantity, orderId} = req.body;
+        const addProduct = await prisma.product.create({
+            data: {
+                id,
+                name,
+                category,
+                sectorName,
+                quantity,
+                orderId,
+            }
+        });
+        res.json(addProduct);
+    } catch (_err) {
+        res.status(500).json({
+            error: _err.message
+        });
+    }
+})
 
 export default router;

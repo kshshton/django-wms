@@ -22,7 +22,7 @@ const QuantityChanger = ({value, onChange, minValue, maxValue}) => {
         style={styles.quantityText}
         value={quantity.toString()}
         keyboardType="numeric"
-        onChangeText={text => handleQuantityChange(parseInt(text, 10) || 0)}
+        onChangeText={text => handleQuantityChange(parseInt(text, 10) || 1)}
       />
 
       <TouchableOpacity onPress={() => handleQuantityChange(quantity + 1)}>

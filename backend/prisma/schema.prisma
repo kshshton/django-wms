@@ -26,7 +26,7 @@ model Sector {
 }
 
 model Product {
-  id         String  @id @unique @map("id")
+  id         String  @id @map("id")
   name       String?
   category   String?
   quantity   Int?
