@@ -27,6 +27,7 @@ const CustomerForm = ({route, navigation}) => {
       products,
       customer: values,
     };
+
     navigation.navigate('Adres', {order});
   };
 

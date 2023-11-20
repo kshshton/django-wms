@@ -78,9 +78,10 @@ router.put('/:id', async (req, res) => {
 
 router.post('/', async (req, res) => {
     try {
-        const {city, state, streetName, buildingNumber, apartmentNumber, customerEmail} = req.body;
+        const {id, city, state, streetName, buildingNumber, apartmentNumber, customerEmail} = req.body;
         const addAddress = await prisma.address.create({
             data: {
+                id,
                 city,
                 state,
                 streetName,

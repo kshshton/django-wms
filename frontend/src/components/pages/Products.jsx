@@ -23,6 +23,7 @@ tokenRefresh();
 const products = await fetch('http://127.0.0.1:8000/api/products', {
     method: 'GET',
     headers: {
+        "Content-Type": "application/json",
         'Access-Control-Allow-Origin': '*',
         'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
     },
@@ -31,6 +32,7 @@ const products = await fetch('http://127.0.0.1:8000/api/products', {
 const sectors = await fetch('http://127.0.0.1:8000/api/sectors', {
     method: 'GET',
     headers: {
+        "Content-Type": "application/json",
         'Access-Control-Allow-Origin': '*',
         'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
     },
@@ -57,6 +59,7 @@ function EditToolbar(props) {
         fetch('http://127.0.0.1:8000/api/products', {
             method: 'POST',
             headers: {
+                "Content-Type": "application/json",
                 'Access-Control-Allow-Origin': '*',
                 'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
             },
@@ -101,6 +104,7 @@ export default function Products() {
         fetch(`http://127.0.0.1:8000/api/products/${target.id}`, {
             method: 'DELETE',
             headers: {
+                "Content-Type": "application/json",
                 'Access-Control-Allow-Origin': '*',
                 'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
             },
@@ -126,6 +130,7 @@ export default function Products() {
         fetch(`http://127.0.0.1:8000/api/products/${updatedRow.id}`, {
             method: 'PUT',
             headers: {
+                "Content-Type": "application/json",
                 'Access-Control-Allow-Origin': '*',
                 'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
             },

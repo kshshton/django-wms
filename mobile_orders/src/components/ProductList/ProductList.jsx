@@ -1,12 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import {Button, FlatList, Text, View} from 'react-native';
 import CheckBox from 'react-native-check-box';
+import {QuantityChanger} from '../QuantityChanger';
+import styles from './styles';
 
 const ProductList = ({navigation}) => {
   const [isLoading, setLoading] = useState(true);
   const [data, setData] = useState([]);
   const [checkedNames, setCheckedNames] = useState([]);
-  // const navigation = useNavigation();
+  const [itemQuantities, setItemQuantities] = useState({});
 
   const getProducts = async () => {
     return await fetch('http://192.168.0.167:8000/api/products', {
@@ -50,24 +52,40 @@ const ProductList = ({navigation}) => {
     setCheckedNames(newCheckedNames);
   };
 
+  const handleQuantityChange = (value, item) => {
+    setItemQuantities(prevQuantities => ({
+      ...prevQuantities,
+      [item.id]: {quantity: value},
+    }));
+  };
+
   const handleSubmit = () => {
-    const products = data.filter(item => checkedNames.includes(item.id));
+    const checkedProducts = data.filter(item => checkedNames.includes(item.id));
+    const products = checkedProducts.map(product => ({
+      ...product,
+      quantity: itemQuantities[product.id].quantity,
+    }));
     navigation.navigate('Dane osobowe', {products});
   };
 
   const renderItem = ({item}) => (
-    <View
-      style={{flexDirection: 'row', alignItems: 'center', marginVertical: 5}}>
+    <View key={item} style={styles.itemsContainer}>
       <CheckBox
         isChecked={checkedNames.includes(item.id)}
         onClick={() => handleCheckboxChange(item.id)}
       />
-      <Text style={{marginLeft: 10}}>{item.name}</Text>
+      <QuantityChanger
+        value={(itemQuantities[item] && itemQuantities[item].quantity) || 1}
+        onChange={value => handleQuantityChange(value, item)}
+        minValue={1}
+        maxValue={item.quantity}
+      />
+      <Text style={styles.itemName}>{item.name}</Text>
     </View>
   );
 
   return (
-    <View style={{flex: 1, padding: 20}}>
+    <View style={styles.itemContainer}>
       <FlatList
         data={data}
         renderItem={renderItem}

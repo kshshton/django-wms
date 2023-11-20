@@ -1,8 +1,16 @@
-import {StatusBar, Text, TextInput, TouchableOpacity, View} from 'react-native';
+import {
+  Alert,
+  StatusBar,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import styles from './styles';
 import {Formik} from 'formik';
 import * as Yup from 'yup';
 import {colors} from '../../config/colors';
+import {v4} from 'react-native-uuid/src/v4';
 
 const CustomerFormSchema = Yup.object().shape({
   city: Yup.string()
@@ -28,12 +36,68 @@ const CustomerFormSchema = Yup.object().shape({
 const AddressForm = ({route, navigation}) => {
   const {order} = route.params;
 
-  const handleSubmit = values => {
-    const result = {
-      order,
-      address: values,
-    };
-    console.log(JSON.stringify(result));
+  const handleSubmit = async values => {
+    order.id = v4();
+    order.address = values;
+    order.address.id = v4();
+    order.address.customerEmail = order.customer.email;
+    order.products = order.products.map(product => ({
+      ...product,
+      orderId: order.id,
+    }));
+
+    await fetch('http://192.168.0.167:8000/api/customer', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+      },
+      body: JSON.stringify({
+        id: v4(),
+        firstName: order.customer.firstName,
+        lastName: order.customer.lastName,
+        email: order.customer.email,
+        phone: order.customer.phone || null,
+      }),
+    })
+      .then(res => res.json())
+      .catch(_err => console.error(_err));
+
+    await fetch('http://192.168.0.167:8000/api/address', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+      },
+      body: JSON.stringify({
+        id: order.address.id,
+        city: order.address.city,
+        state: order.address.state,
+        streetName: order.address.streetName,
+        buildingNumber: order.address.buildingNumber,
+        apartmentNumber: order.address.apartmentNumber,
+        customerEmail: order.customer.email,
+      }),
+    })
+      .then(res => res.json())
+      .catch(_err => console.error(_err));
+
+    const r = await fetch('http://192.168.0.167:8000/api/orders', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+      },
+      body: JSON.stringify({
+        id: order.id,
+        addressId: order.address.id,
+        cart: order.products,
+      }),
+    });
+
+    console.log(await r.json());
+
+    Alert.alert('Wysłano!');
   };
 
   return (

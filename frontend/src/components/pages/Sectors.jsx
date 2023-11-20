@@ -23,6 +23,7 @@ tokenRefresh();
 const sectors = await fetch('http://127.0.0.1:8000/api/sectors', {
     method: 'GET',
     headers: {
+        "Content-Type": "application/json",
         'Access-Control-Allow-Origin': '*',
         'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
     },
@@ -42,6 +43,7 @@ function EditToolbar(props) {
         fetch('http://127.0.0.1:8000/api/sectors', {
             method: 'POST',
             headers: {
+                "Content-Type": "application/json",
                 'Access-Control-Allow-Origin': '*',
                 'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
             },
@@ -86,6 +88,7 @@ export default function Sectors() {
         fetch(`http://127.0.0.1:8000/api/sectors/${target.id}`, {
             method: 'DELETE',
             headers: {
+                "Content-Type": "application/json",
                 'Access-Control-Allow-Origin': '*',
                 'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
             },
@@ -111,6 +114,7 @@ export default function Sectors() {
         fetch(`http://127.0.0.1:8000/api/sectors/${updatedRow.id}`, {
             method: 'PUT',
             headers: {
+                "Content-Type": "application/json",
                 'Access-Control-Allow-Origin': '*',
                 'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
             },
