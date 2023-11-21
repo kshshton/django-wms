@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {useEffect} from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
@@ -7,37 +8,26 @@ import DeleteIcon from '@mui/icons-material/DeleteOutlined';
 import SaveIcon from '@mui/icons-material/Save';
 import CancelIcon from '@mui/icons-material/Close';
 import {
-    GridRowModes,
     DataGrid,
-    GridToolbarContainer,
     GridActionsCellItem,
     GridRowEditStopReasons,
+    GridRowModes,
+    GridToolbarContainer,
 } from '@mui/x-data-grid';
-import {
-    randomId,
-} from '@mui/x-data-grid-generator';
+import {randomId,} from '@mui/x-data-grid-generator';
+import {getSectors} from "../../utils/Database.js";
 import {tokenRefresh} from "../../utils/TokenRefresh.js";
 
-tokenRefresh();
-
-const sectors = await fetch('http://127.0.0.1:8000/api/sectors', {
-    method: 'GET',
-    headers: {
-        "Content-Type": "application/json",
-        'Access-Control-Allow-Origin': '*',
-        'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
-    },
-}).then(r => r.json()).catch();
 
 function EditToolbar(props) {
-    const { setRows, setRowModesModel } = props;
+    const {setRows, setRowModesModel} = props;
 
     const handleClick = () => {
         const id = randomId();
-        setRows((oldRows) => [...oldRows, { id, name: '', isNew: true }]);
+        setRows((oldRows) => [...oldRows, {id, name: '', isNew: true}]);
         setRowModesModel((oldModel) => ({
             ...oldModel,
-            [id]: { mode: GridRowModes.Edit, fieldToFocus: 'name' },
+            [id]: {mode: GridRowModes.Edit, fieldToFocus: 'name'},
         }));
 
         fetch('http://127.0.0.1:8000/api/sectors', {
@@ -55,7 +45,7 @@ function EditToolbar(props) {
 
     return (
         <GridToolbarContainer>
-            <Button color="primary" startIcon={<AddIcon />} onClick={handleClick}>
+            <Button color="primary" startIcon={<AddIcon/>} onClick={handleClick}>
                 Add record
             </Button>
         </GridToolbarContainer>
@@ -63,8 +53,20 @@ function EditToolbar(props) {
 }
 
 export default function Sectors() {
-    const [rows, setRows] = React.useState(sectors);
+    const [rows, setRows] = React.useState([]);
     const [rowModesModel, setRowModesModel] = React.useState({});
+
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const sectors = await getSectors();
+
+            setRows(sectors);
+        };
+
+        fetchData();
+        tokenRefresh();
+    }, []);
 
 
     const handleRowEditStop = (params, event) => {
@@ -74,11 +76,11 @@ export default function Sectors() {
     };
 
     const handleEditClick = (id) => () => {
-        setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.Edit } });
+        setRowModesModel({...rowModesModel, [id]: {mode: GridRowModes.Edit}});
     };
 
     const handleSaveClick = (id) => () => {
-        setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.View } });
+        setRowModesModel({...rowModesModel, [id]: {mode: GridRowModes.View}});
     };
 
     const handleDeleteClick = (id) => () => {
@@ -98,7 +100,7 @@ export default function Sectors() {
     const handleCancelClick = (id) => () => {
         setRowModesModel({
             ...rowModesModel,
-            [id]: { mode: GridRowModes.View, ignoreModifications: true },
+            [id]: {mode: GridRowModes.View, ignoreModifications: true},
         });
 
         const editedRow = rows.find((row) => row.id === id);
@@ -108,7 +110,7 @@ export default function Sectors() {
     };
 
     const processRowUpdate = (newRow) => {
-        const updatedRow = { ...newRow, isNew: false };
+        const updatedRow = {...newRow, isNew: false};
         setRows(rows.map((row) => (row.id === newRow.id ? updatedRow : row)));
 
         fetch(`http://127.0.0.1:8000/api/sectors/${updatedRow.id}`, {
@@ -143,13 +145,13 @@ export default function Sectors() {
             headerName: 'Actions',
             width: 100,
             cellClassName: 'actions',
-            getActions: ({ id }) => {
+            getActions: ({id}) => {
                 const isInEditMode = rowModesModel[id]?.mode === GridRowModes.Edit;
 
                 if (isInEditMode) {
                     return [
                         <GridActionsCellItem
-                            icon={<SaveIcon />}
+                            icon={<SaveIcon/>}
                             label="Save"
                             sx={{
                                 color: 'primary.main',
@@ -157,7 +159,7 @@ export default function Sectors() {
                             onClick={handleSaveClick(id)}
                         />,
                         <GridActionsCellItem
-                            icon={<CancelIcon />}
+                            icon={<CancelIcon/>}
                             label="Cancel"
                             className="textPrimary"
                             onClick={handleCancelClick(id)}
@@ -168,14 +170,14 @@ export default function Sectors() {
 
                 return [
                     <GridActionsCellItem
-                        icon={<EditIcon />}
+                        icon={<EditIcon/>}
                         label="Edit"
                         className="textPrimary"
                         onClick={handleEditClick(id)}
                         color="inherit"
                     />,
                     <GridActionsCellItem
-                        icon={<DeleteIcon />}
+                        icon={<DeleteIcon/>}
                         label="Delete"
                         onClick={handleDeleteClick(id)}
                         color="inherit"
@@ -210,7 +212,7 @@ export default function Sectors() {
                     toolbar: EditToolbar,
                 }}
                 slotProps={{
-                    toolbar: { setRows, setRowModesModel },
+                    toolbar: {setRows, setRowModesModel},
                 }}
             />
         </Box>
