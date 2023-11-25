@@ -29,8 +29,9 @@ export default function SignIn() {
     })
       .then((r) => r.json())
       .then((item) => {
-        localStorage.setItem("accessToken", item.accessToken);
-        localStorage.setItem("refreshToken", item.refreshToken);
+        localStorage.setItem("accessToken", item.tokens.accessToken);
+        localStorage.setItem("refreshToken", item.tokens.refreshToken);
+        localStorage.setItem("userId", item.userId);
       });
   };
 

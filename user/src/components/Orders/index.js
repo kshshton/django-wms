@@ -7,7 +7,7 @@ const Orders = () => {
   const [orders, setOrders] = useState([]);
 
   const getOrders = async () => {
-    const {data} = await get_orders();
+    const {data} = await get_orders().catch(_err => console.error(_err));
     setOrders(data);
   };
 
@@ -20,8 +20,8 @@ const Orders = () => {
   return (
     <View style={style.container}>
       {orders.map(order => (
-        <TouchableOpacity key={order.id} onPress={test} style={style.loginBtn}>
-          <Text style={style.loginText}>Order</Text>
+        <TouchableOpacity key={order.id} onPress={test} style={style.orderBtn}>
+          <Text style={style.loginText}>{order.id}</Text>
         </TouchableOpacity>
       ))}
     </View>

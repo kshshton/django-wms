@@ -16,7 +16,9 @@ const Login = ({navigation}) => {
       password: data.password,
     }).then(res => {
       if (res.status === 200) {
-        AsyncStorage.setItem('accessToken', res.data.accessToken);
+        AsyncStorage.setItem('accessToken', res.data.tokens.accessToken);
+        AsyncStorage.setItem('refreshToken', res.data.tokens.refreshToken);
+        AsyncStorage.setItem('userId', res.data.userId);
         navigation.navigate('Zamówienia');
       }
     });
