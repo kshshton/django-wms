@@ -16,7 +16,7 @@ export default StyleSheet.create({
   },
   inputView: {
     width: '80%',
-    backgroundColor: colors.navy,
+    backgroundColor: colors.black,
     borderRadius: 25,
     height: 50,
     marginBottom: 20,

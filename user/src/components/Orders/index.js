@@ -3,7 +3,7 @@ import {Text, TouchableOpacity, View} from 'react-native';
 import {get_orders} from '../../services/get_orders';
 import style from './style';
 
-const Orders = () => {
+const Orders = ({navigation}) => {
   const [orders, setOrders] = useState([]);
 
   const getOrders = async () => {
@@ -15,12 +15,17 @@ const Orders = () => {
     getOrders();
   }, []);
 
-  const test = () => console.log(orders);
+  const navigateToOrder = orderId => {
+    navigation.navigate('Zamówienie', {orderId});
+  };
 
   return (
     <View style={style.container}>
       {orders.map(order => (
-        <TouchableOpacity key={order.id} onPress={test} style={style.orderBtn}>
+        <TouchableOpacity
+          key={order.id}
+          onPress={() => navigateToOrder(order.id)}
+          style={style.orderBtn}>
           <Text style={style.loginText}>{order.id}</Text>
         </TouchableOpacity>
       ))}
