@@ -97,7 +97,7 @@ router.post("/", async (req, res) => {
       data: {
         firstName,
         lastName,
-        hashedPassword,
+        password: hashedPassword,
         email,
       },
     });

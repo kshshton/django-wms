@@ -24,13 +24,18 @@ export default function Orders() {
     const orders = await getOrders();
     const users = await getUsers();
 
-    const rows = orders.map((order) => ({
-      id: order.id,
-      complete: order.complete,
-      cartURL: `${url}/${order.id}/cart`,
-      addressURL: `${url}/${order.id}/address`,
-      customerURL: `${url}/${order.id}/customer`,
-    }));
+    const rows = orders.map((order) => {
+      const user = users.find((user) => user.id === order.userId);
+
+      return {
+        id: order.id,
+        userEmail: user.email,
+        complete: order.complete,
+        cartURL: `${url}/${order.id}/cart`,
+        addressURL: `${url}/${order.id}/address`,
+        customerURL: `${url}/${order.id}/customer`,
+      };
+    });
 
     setRows(rows);
     setUsers(users);
@@ -97,7 +102,7 @@ export default function Orders() {
       },
       body: JSON.stringify({
         complete: updatedRow.complete,
-        userId: getUserIdByEmail(updatedRow.user),
+        userId: getUserIdByEmail(updatedRow.userEmail),
       }),
     }).then((r) => r.json());
 
@@ -133,7 +138,7 @@ export default function Orders() {
       renderCell: (param) => <a href={param.value}>OPEN</a>,
     },
     {
-      field: "user",
+      field: "userEmail",
       headerName: "User",
       width: 200,
       editable: true,

@@ -1,3 +1,4 @@
+import {Formik} from 'formik';
 import {
   Alert,
   StatusBar,
@@ -6,11 +7,9 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import styles from './styles';
-import {Formik} from 'formik';
+import {v4} from 'react-native-uuid/src/v4';
 import * as Yup from 'yup';
 import {colors} from '../../config/colors';
-import {v4} from 'react-native-uuid/src/v4';
 import {
   sendAddressData,
   sendCustomerData,
@@ -18,6 +17,7 @@ import {
   sendProducts,
   updateDatabaseProducts,
 } from '../../utils/database';
+import styles from './styles';
 
 const CustomerFormSchema = Yup.object().shape({
   city: Yup.string()
@@ -63,7 +63,7 @@ const AddressForm = ({route, navigation}) => {
 
     await sendProducts(order.products);
 
-    Alert.alert('Wysłano!');
+    Alert.alert('Wysłano zamówienie!');
   };
 
   return (

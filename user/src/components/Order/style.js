@@ -9,7 +9,8 @@ export default StyleSheet.create({
     justifyContent: 'center',
   },
   itemList: {
-    marginTop: 35,
+    marginTop: 17.5,
+    marginBottom: 17.5,
     padding: 10,
     borderWidth: 1.5,
     borderRadius: 10,

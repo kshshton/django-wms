@@ -11,7 +11,7 @@ datasource db {
 }
 
 model User {
-  id        String  @id @unique @default(uuid()) @map("id")
+  id        String  @id @default(uuid()) @map("id")
   firstName String
   lastName  String
   password  String
@@ -20,7 +20,7 @@ model User {
 }
 
 model Sector {
-  id       String    @id @unique
+  id       String    @id
   name     String?   @unique @map("name")
   products Product[]
 }
@@ -37,7 +37,7 @@ model Product {
 }
 
 model Order {
-  id        String    @id @unique @map("id")
+  id        String    @id @map("id")
   address   Address   @relation(fields: [addressId], references: [id])
   addressId String    @unique
   complete  Boolean
@@ -47,7 +47,7 @@ model Order {
 }
 
 model Customer {
-  id        String   @id @unique @default(uuid()) @map("id")
+  id        String   @id @default(uuid()) @map("id")
   firstName String
   lastName  String
   email     String   @unique @map("email")
@@ -56,7 +56,7 @@ model Customer {
 }
 
 model Address {
-  id              String    @id @unique @default(uuid()) @map("id")
+  id              String    @id @default(uuid()) @map("id")
   city            String
   state           String
   streetName      String
