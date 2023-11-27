@@ -65,7 +65,14 @@ export default function Products() {
       const products = await getProducts();
       const sectors = await getSectors();
 
-      setRows(products);
+      const updatedProducts = products.map((product) => {
+        return {
+          ...product,
+          qr: `http://localhost:5173/products/${product.id}/qr`,
+        };
+      });
+
+      setRows(updatedProducts);
       setSectors(sectors);
     };
 
@@ -150,6 +157,12 @@ export default function Products() {
       editable: true,
       type: "singleSelect",
       valueOptions: () => sectors?.map((sector) => sector.name),
+    },
+    {
+      field: "qr",
+      headerName: "QR",
+      width: 100,
+      renderCell: (param) => <a href={param.value}>OPEN</a>,
     },
     {
       field: "actions",
