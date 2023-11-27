@@ -12,7 +12,10 @@ import {
 } from "@mui/x-data-grid";
 import * as React from "react";
 import { useEffect } from "react";
-import { getOrders, getUsers } from "../../utils/Database.js";
+import { deleteOrder } from "../../services/deleteOrder";
+import { getOrders } from "../../services/getOrders";
+import { getUsers } from "../../services/getUsers";
+import { updateOrder } from "../../services/updateOrder";
 
 export default function Orders() {
   const url = "http://127.0.0.1:8000/api/orders";
@@ -45,10 +48,6 @@ export default function Orders() {
     fetchData();
   }, []);
 
-  const getUserIdByEmail = (email) => {
-    return users.find((user) => user.email === email).id;
-  };
-
   const handleRowEditStop = (params, event) => {
     if (params.reason === GridRowEditStopReasons.rowFocusOut) {
       event.defaultMuiPrevented = true;
@@ -67,14 +66,7 @@ export default function Orders() {
     setRows(rows.filter((row) => row.id !== id));
     const target = rows.find((obj) => obj.id === id);
 
-    fetch(`http://127.0.0.1:8000/api/orders/${target.id}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-      },
-    }).then((r) => r.json());
+    deleteOrder(target);
   };
 
   const handleCancelClick = (id) => () => {
@@ -93,18 +85,7 @@ export default function Orders() {
     const updatedRow = { ...newRow, isNew: false };
     setRows(rows.map((row) => (row.id === newRow.id ? updatedRow : row)));
 
-    fetch(`http://127.0.0.1:8000/api/orders/${updatedRow.id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-      },
-      body: JSON.stringify({
-        complete: updatedRow.complete,
-        userId: getUserIdByEmail(updatedRow.userEmail),
-      }),
-    }).then((r) => r.json());
+    updateOrder(updatedRow);
 
     return updatedRow;
   };

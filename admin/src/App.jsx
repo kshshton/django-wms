@@ -1,36 +1,31 @@
-import {
-    BrowserRouter as Router,
-    Routes,
-    Route
-} from "react-router-dom";
-import './App.css'
-import AppBar from "./components/AppBar.jsx";
-import Home from "./components/pages/Home.jsx";
-import Products from "./components/pages/Products.jsx";
-import Sectors from "./components/pages/Sectors.jsx";
-import Orders from "./components/pages/Orders.jsx";
-import User from "./components/user/User.jsx";
-import Login from "./components/user/Login.jsx";
-import Register from "./components/user/Register.jsx";
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import "./App.css";
+import Home from "./components//Home";
+import AppBar from "./components/AppBar";
+import Login from "./components/Login";
+import Orders from "./components/Orders";
+import Products from "./components/Products";
+import Register from "./components/Register";
+import Sectors from "./components/Sectors";
+import User from "./components/User";
 
 const App = () => {
-
   return (
-      <>
-          <Router>
-              <AppBar />
-              <Routes>
-                  <Route path="/" element={<Home />} />
-                  <Route path="/products" element={<Products />} />
-                  <Route path="/sectors" element={<Sectors />} />
-                  <Route path="/orders" element={<Orders />} />
-                  <Route path="/user" element={<User />} />
-                  <Route path="/login" element={<Login />} />
-                  <Route path="/register" element={<Register />} />
-              </Routes>
-          </Router>
-      </>
+    <>
+      <Router>
+        <AppBar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/products" element={<Products />} />
+          <Route path="/sectors" element={<Sectors />} />
+          <Route path="/orders" element={<Orders />} />
+          <Route path="/user" element={<User />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+        </Routes>
+      </Router>
+    </>
   );
-}
+};
 
-export default App
+export default App;

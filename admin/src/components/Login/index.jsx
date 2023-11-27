@@ -9,32 +9,11 @@ import Link from "@mui/material/Link";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
+import { handleLoginSubmit } from "../../services/handleLoginSubmit";
 
 const defaultTheme = createTheme();
 
 export default function SignIn() {
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    fetch("http://127.0.0.1:8000/api/auth/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-      },
-      body: JSON.stringify({
-        email: data.get("email"),
-        password: data.get("password"),
-      }),
-    })
-      .then((r) => r.json())
-      .then((item) => {
-        localStorage.setItem("accessToken", item.tokens.accessToken);
-        localStorage.setItem("refreshToken", item.tokens.refreshToken);
-        localStorage.setItem("userId", item.userId);
-      });
-  };
-
   return (
     <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="xs">
@@ -55,7 +34,7 @@ export default function SignIn() {
           </Typography>
           <Box
             component="form"
-            onSubmit={handleSubmit}
+            onSubmit={handleLoginSubmit}
             noValidate
             sx={{ mt: 1 }}
           >
