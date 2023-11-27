@@ -1,7 +1,9 @@
+import { ApiManager } from "./ApiManager";
+
 export const handleLoginSubmit = async (event) => {
   event.preventDefault();
   const data = new FormData(event.currentTarget);
-  fetch("http://127.0.0.1:8000/api/auth/login", {
+  fetch(`${ApiManager.url}/auth/login`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

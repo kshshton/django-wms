@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {Text, TouchableOpacity, View} from 'react-native';
 import {get_orders} from '../../services/get_orders';
-import style from './style';
+import styles from './styles';
 
 const Orders = ({navigation}) => {
   const [orders, setOrders] = useState([]);
@@ -20,13 +20,13 @@ const Orders = ({navigation}) => {
   };
 
   return (
-    <View style={style.container}>
+    <View style={styles.container}>
       {orders.map(order => (
         <TouchableOpacity
           key={order.id}
           onPress={() => navigateToOrder(order.id)}
-          style={style.orderBtn}>
-          <Text style={style.loginText}>{order.id}</Text>
+          style={styles.orderBtn}>
+          <Text style={styles.loginText}>{order.id}</Text>
         </TouchableOpacity>
       ))}
     </View>

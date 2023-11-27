@@ -1,12 +1,11 @@
 import { ApiManager } from "./ApiManager";
 
-export const updateOrder = (orderId, userId, complete) => {
-  return fetch(`${ApiManager.url}/orders/${orderId}`, {
+export const updateSector = (updatedRow) => {
+  fetch(`${ApiManager.url}/sectors/${updatedRow.id}`, {
     method: "PUT",
     headers: ApiManager.headers,
     body: JSON.stringify({
-      complete,
-      userId,
+      name: updatedRow.name,
     }),
   }).then((r) => r.json());
 };

@@ -19,7 +19,7 @@ import { tokenRefresh } from "../../services/TokenRefresh";
 import { deleteSector } from "../../services/deleteSector";
 import { getSectors } from "../../services/getSectors";
 import { postSector } from "../../services/postSector";
-import { putSector } from "../../services/putSector";
+import { updateSector } from "../../services/updateSector";
 
 function EditToolbar(props) {
   const { setRows, setRowModesModel } = props;
@@ -96,7 +96,7 @@ const Sectors = () => {
     const updatedRow = { ...newRow, isNew: false };
     setRows(rows.map((row) => (row.id === newRow.id ? updatedRow : row)));
 
-    putSector(updatedRow);
+    updateSector(updatedRow);
 
     return updatedRow;
   };

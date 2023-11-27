@@ -9,7 +9,7 @@ import Link from "@mui/material/Link";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import { handleRegisterSubmit } from "../../services/handleSubmit";
+import { handleRegisterSubmit } from "../../services/handleRegisterSubmit";
 
 const defaultTheme = createTheme();
 

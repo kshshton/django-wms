@@ -32,13 +32,15 @@ export default function Orders() {
 
       return {
         id: order.id,
-        userEmail: user.email,
+        userEmail: user ? user.email : null,
         complete: order.complete,
         cartURL: `${url}/${order.id}/cart`,
         addressURL: `${url}/${order.id}/address`,
         customerURL: `${url}/${order.id}/customer`,
       };
     });
+
+    console.log(rows);
 
     setRows(rows);
     setUsers(users);
@@ -47,6 +49,10 @@ export default function Orders() {
   useEffect(() => {
     fetchData();
   }, []);
+
+  const getUserIdByEmail = (email) => {
+    return users.find((user) => user.email === email).id;
+  };
 
   const handleRowEditStop = (params, event) => {
     if (params.reason === GridRowEditStopReasons.rowFocusOut) {
@@ -85,7 +91,11 @@ export default function Orders() {
     const updatedRow = { ...newRow, isNew: false };
     setRows(rows.map((row) => (row.id === newRow.id ? updatedRow : row)));
 
-    updateOrder(updatedRow);
+    updateOrder(
+      updatedRow.id,
+      getUserIdByEmail(updatedRow.userEmail),
+      updatedRow.complete
+    );
 
     return updatedRow;
   };
@@ -124,7 +134,7 @@ export default function Orders() {
       width: 200,
       editable: true,
       type: "singleSelect",
-      valueOptions: () => users?.map((user) => `${user.email}`),
+      valueOptions: () => users.map((user) => `${user.email}`),
     },
     {
       field: "complete",

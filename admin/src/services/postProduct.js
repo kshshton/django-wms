@@ -1,11 +1,9 @@
+import { ApiManager } from "./ApiManager";
+
 export const postProduct = (id) => {
-  return fetch("http://127.0.0.1:8000/api/products", {
+  return fetch(`${ApiManager.url}/products`, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "Access-Control-Allow-Origin": "*",
-      Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-    },
+    headers: ApiManager.headers,
     body: JSON.stringify({
       id,
     }),

@@ -3,7 +3,7 @@ import React, {useState} from 'react';
 import {Text, TextInput, TouchableOpacity, View} from 'react-native';
 import {colors} from '../../config/colors';
 import {user_login} from '../../services/user_login';
-import style from './style';
+import styles from './styles';
 
 const Login = ({navigation}) => {
   const [data, setData] = useState({
@@ -24,10 +24,10 @@ const Login = ({navigation}) => {
     });
   };
   return (
-    <View style={style.container}>
-      <View style={style.inputView}>
+    <View style={styles.container}>
+      <View style={styles.inputView}>
         <TextInput
-          style={style.inputText}
+          style={styles.inputText}
           placeholder="Email"
           placeholderTextColor={colors.lightBlue}
           onChangeText={text =>
@@ -35,9 +35,9 @@ const Login = ({navigation}) => {
           }
         />
       </View>
-      <View style={style.inputView}>
+      <View style={styles.inputView}>
         <TextInput
-          style={style.inputText}
+          style={styles.inputText}
           secureTextEntry
           placeholder="Password"
           placeholderTextColor={colors.lightBlue}
@@ -46,8 +46,8 @@ const Login = ({navigation}) => {
           }
         />
       </View>
-      <TouchableOpacity onPress={onPressLogin} style={style.loginBtn}>
-        <Text style={style.loginText}>LOGIN </Text>
+      <TouchableOpacity onPress={onPressLogin} style={styles.loginBtn}>
+        <Text style={styles.loginText}>LOGIN </Text>
       </TouchableOpacity>
     </View>
   );

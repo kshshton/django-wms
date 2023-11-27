@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {FlatList, Text, View} from 'react-native';
 import {get_order} from '../../services/get_order';
-import style from './style';
+import styles from './styles';
 
 const Order = ({route}) => {
   const [order, setOrder] = useState([]);
@@ -18,17 +18,17 @@ const Order = ({route}) => {
 
   const renderItem = ({item}) => {
     return (
-      <View style={style.itemList}>
-        <Text style={style.itemText}>Name: {item.name}</Text>
-        <Text style={style.itemText}>Category: {item.category}</Text>
-        <Text style={style.itemText}>Quantity: {item.quantity}</Text>
-        <Text style={style.itemText}>Sector: {item.sectorName}</Text>
+      <View style={styles.itemList}>
+        <Text style={styles.itemText}>Name: {item.name}</Text>
+        <Text style={styles.itemText}>Category: {item.category}</Text>
+        <Text style={styles.itemText}>Quantity: {item.quantity}</Text>
+        <Text style={styles.itemText}>Sector: {item.sectorName}</Text>
       </View>
     );
   };
 
   return (
-    <View style={style.container}>
+    <View style={styles.container}>
       <FlatList
         data={order}
         renderItem={renderItem}
