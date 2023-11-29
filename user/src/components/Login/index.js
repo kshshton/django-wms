@@ -19,7 +19,7 @@ const Login = ({navigation}) => {
         AsyncStorage.setItem('accessToken', res.data.tokens.accessToken);
         AsyncStorage.setItem('refreshToken', res.data.tokens.refreshToken);
         AsyncStorage.setItem('userId', res.data.userId);
-        navigation.navigate('Zamówienia');
+        navigation.navigate('Orders');
       }
     });
   };

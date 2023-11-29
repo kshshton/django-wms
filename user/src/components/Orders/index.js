@@ -16,7 +16,7 @@ const Orders = ({navigation}) => {
   }, []);
 
   const navigateToOrder = orderId => {
-    navigation.navigate('Zamówienie', {orderId});
+    navigation.navigate('Order', {orderId});
   };
 
   return (
