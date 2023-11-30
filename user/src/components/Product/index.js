@@ -1,24 +1,25 @@
 import React, {useEffect, useState} from 'react';
 import {FlatList, Text, View} from 'react-native';
-import {get_order} from '../../services/get_order';
+import {get_product} from '../../services/get_product';
 import styles from './styles';
 
-const Order = ({route}) => {
-  const [order, setOrder] = useState([]);
-  const {orderId} = route.params;
+const Product = ({route}) => {
+  const [product, setProduct] = useState([]);
+  const {productId} = route.params;
 
-  const getOrderInfo = async () => {
-    const {data} = await get_order(orderId);
-    setOrder(data);
+  const getProduct = async () => {
+    const {data} = await get_product(productId);
+    setProduct(data);
   };
 
   useEffect(() => {
-    getOrderInfo();
+    getProduct();
   }, []);
 
   const renderItem = ({item}) => {
     return (
       <View style={styles.itemList}>
+        <Text style={styles.itemText}>ID: {item.id}</Text>
         <Text style={styles.itemText}>Nazwa: {item.name}</Text>
         <Text style={styles.itemText}>Kategoria: {item.category}</Text>
         <Text style={styles.itemText}>Ilość: {item.quantity}</Text>
@@ -30,7 +31,7 @@ const Order = ({route}) => {
   return (
     <View style={styles.container}>
       <FlatList
-        data={order}
+        data={product}
         renderItem={renderItem}
         keyExtractor={(_, index) => index.toString()}
       />
@@ -38,4 +39,4 @@ const Order = ({route}) => {
   );
 };
 
-export default Order;
+export default Product;

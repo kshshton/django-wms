@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {Button, FlatList, Text, View} from 'react-native';
 import CheckBox from 'react-native-check-box';
+import {get_products} from '../../services/get_products';
 import QuantityChanger from '../QuantityChanger';
 import styles from './styles';
 
@@ -10,20 +11,9 @@ const ProductList = ({navigation}) => {
   const [checkedNames, setCheckedNames] = useState([]);
   const [itemQuantities, setItemQuantities] = useState({});
 
-  const getProducts = async () => {
-    return await fetch('http://192.168.0.167:8000/api/products', {
-      method: 'GET',
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-      },
-    })
-      .then(res => res.json())
-      .catch(_err => console.error(_err));
-  };
-
   useEffect(() => {
     const fetchData = async () => {
-      const products = await getProducts();
+      const products = await get_products();
       setData(products);
       setLoading(false);
     };

@@ -6,6 +6,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Login from './components/Login';
 import Order from './components/Order';
 import Orders from './components/Orders';
+import Product from './components/Product';
 import Scanner from './components/Scanner';
 
 const Stack = createStackNavigator();
@@ -29,6 +30,7 @@ const ScannerStack = () => {
       screenOptions={{headerShown: false}}
       initialRouteName="Scanner">
       <Stack.Screen name="Scanner" component={Scanner} />
+      <Stack.Screen name="Product" component={Product} />
     </Stack.Navigator>
   );
 };
@@ -41,7 +43,7 @@ const App = () => {
           name="Zamówienia"
           options={{
             tabBarIcon: ({color, size}) => (
-              <MaterialIcons name="person" size={size} color={color} />
+              <MaterialIcons name="warehouse" size={size} color={color} />
             ),
           }}
           component={OrderStack}

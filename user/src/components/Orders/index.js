@@ -7,7 +7,7 @@ const Orders = ({navigation}) => {
   const [orders, setOrders] = useState([]);
 
   const getOrders = async () => {
-    const {data} = await get_orders().catch(_err => console.error(_err));
+    const {data} = await get_orders();
     setOrders(data);
   };
 

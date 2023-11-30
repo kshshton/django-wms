@@ -1,12 +1,13 @@
-import {useState} from 'react';
 import QRCodeScanner from 'react-native-qrcode-scanner';
 
-const Scanner = () => {
-  const [data, setData] = useState('data');
-  console.log(data);
+const Scanner = ({navigation}) => {
+  const navigateToProduct = productId => {
+    navigation.navigate('Product', {productId});
+  };
+
   return (
     <QRCodeScanner
-      onRead={({data}) => setData(data)}
+      onRead={({data}) => navigateToProduct(data)}
       reactivate={true}
       reactivateTimeout={500}
       showMarker={true}
