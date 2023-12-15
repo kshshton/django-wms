@@ -15,11 +15,12 @@ import {
 import { randomId } from "@mui/x-data-grid-generator";
 import * as React from "react";
 import { useEffect } from "react";
-import { tokenRefresh } from "../../services/TokenRefresh";
-import { deleteSector } from "../../services/deleteSector";
-import { getSectors } from "../../services/getSectors";
-import { postSector } from "../../services/postSector";
-import { updateSector } from "../../services/updateSector";
+import { useNavigate } from "react-router-dom";
+import { tokenRefresh } from "../../services/Auth/TokenRefresh";
+import { deleteSector } from "../../services/Sectors/deleteSector";
+import { getSectors } from "../../services/Sectors/getSectors";
+import { postSector } from "../../services/Sectors/postSector";
+import { updateSector } from "../../services/Sectors/updateSector";
 
 function EditToolbar(props) {
   const { setRows, setRowModesModel } = props;
@@ -47,8 +48,13 @@ function EditToolbar(props) {
 const Sectors = () => {
   const [rows, setRows] = React.useState([]);
   const [rowModesModel, setRowModesModel] = React.useState({});
+  const navigate = useNavigate();
 
   useEffect(() => {
+    const token = localStorage.getItem("accessToken");
+
+    if (token === "undefined") navigate("/login");
+
     const fetchData = async () => {
       const sectors = await getSectors();
 

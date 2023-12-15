@@ -12,16 +12,20 @@ import {
 } from "@mui/x-data-grid";
 import * as React from "react";
 import { useEffect } from "react";
-import { deleteOrder } from "../../services/deleteOrder";
-import { getOrders } from "../../services/getOrders";
-import { getUsers } from "../../services/getUsers";
-import { updateOrder } from "../../services/updateOrder";
+import { useNavigate } from "react-router-dom";
+import AddressPopup from "../../AddressPopup";
+import CartPopup from "../../CartPopup";
+import CustomerPopup from "../../CustomerPopup";
+import { deleteOrder } from "../../services/Orders/deleteOrder";
+import { getOrders } from "../../services/Orders/getOrders";
+import { updateOrder } from "../../services/Orders/updateOrder";
+import { getUsers } from "../../services/User/getUsers";
 
 export default function Orders() {
-  const url = "http://127.0.0.1:8000/api/orders";
   const [users, setUsers] = React.useState([]);
   const [rows, setRows] = React.useState([]);
   const [rowModesModel, setRowModesModel] = React.useState({});
+  const navigate = useNavigate();
 
   const fetchData = async () => {
     const orders = await getOrders();
@@ -34,19 +38,21 @@ export default function Orders() {
         id: order.id,
         userEmail: user ? user.email : null,
         complete: order.complete,
-        cartURL: `${url}/${order.id}/cart`,
-        addressURL: `${url}/${order.id}/address`,
-        customerURL: `${url}/${order.id}/customer`,
+        cart: order.id,
+        address: order.id,
+        customer: order.id,
       };
     });
-
-    console.log(rows);
 
     setRows(rows);
     setUsers(users);
   };
 
   useEffect(() => {
+    const token = localStorage.getItem("accessToken");
+
+    if (token === "undefined") navigate("/login");
+
     fetchData();
   }, []);
 
@@ -107,26 +113,32 @@ export default function Orders() {
   const columns = [
     {
       field: "id",
-      headerName: "Id",
-      width: 300,
+      headerName: "ID",
+      width: 80,
     },
     {
-      field: "cartURL",
+      field: "cart",
       headerName: "Cart",
+      headerAlign: "center",
+      align: "center",
       width: 100,
-      renderCell: (param) => <a href={param.value}>OPEN</a>,
+      renderCell: (param) => <CartPopup id={param.value} />,
     },
     {
-      field: "addressURL",
+      field: "address",
       headerName: "Address",
+      headerAlign: "center",
+      align: "center",
       width: 100,
-      renderCell: (param) => <a href={param.value}>OPEN</a>,
+      renderCell: (param) => <AddressPopup id={param.value} />,
     },
     {
-      field: "customerURL",
+      field: "customer",
       headerName: "Customer",
+      headerAlign: "center",
+      align: "center",
       width: 100,
-      renderCell: (param) => <a href={param.value}>OPEN</a>,
+      renderCell: (param) => <CustomerPopup id={param.value} />,
     },
     {
       field: "userEmail",

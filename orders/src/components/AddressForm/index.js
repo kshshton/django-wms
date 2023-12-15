@@ -10,11 +10,11 @@ import {
 import {v4} from 'react-native-uuid/src/v4';
 import * as Yup from 'yup';
 import {colors} from '../../config/colors';
-import {send_address_data} from '../../services/send_address_data';
-import {send_customer_data} from '../../services/send_customer_data';
-import {send_order} from '../../services/send_order';
-import {send_products} from '../../services/send_products';
-import {update_products} from '../../services/update_products';
+import {send_address_data} from '../../services/Address/send_address_data';
+import {send_customer_data} from '../../services/Customer/send_customer_data';
+import {send_order} from '../../services/Order/send_order';
+import {send_products} from '../../services/Products/send_products';
+import {update_products} from '../../services/Products/update_products';
 import styles from './styles';
 
 const CustomerFormSchema = Yup.object().shape({
@@ -38,7 +38,7 @@ const CustomerFormSchema = Yup.object().shape({
     .optional(),
 });
 
-const AddressForm = ({route, navigation}) => {
+const AddressForm = ({route}) => {
   const {order} = route.params;
 
   const handleSubmit = async values => {

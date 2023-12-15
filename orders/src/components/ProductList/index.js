@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {Button, FlatList, Text, View} from 'react-native';
 import CheckBox from 'react-native-check-box';
-import {get_products} from '../../services/get_products';
+import {get_products} from '../../services/Products/get_products';
 import QuantityChanger from '../QuantityChanger';
 import styles from './styles';
 

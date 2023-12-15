@@ -12,10 +12,11 @@
   "dependencies": {
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
-    "@mui/icons-material": "^5.14.14",
-    "@mui/material": "^5.14.14",
+    "@mui/icons-material": "^5.15.0",
+    "@mui/material": "^5.15.0",
     "@mui/x-data-grid": "^6.16.3",
     "@mui/x-data-grid-generator": "^6.16.3",
+    "dotenv": "^16.3.1",
     "html2canvas": "^1.4.1",
     "material-react-table": "^1.15.1",
     "qrcode.react": "^3.1.0",

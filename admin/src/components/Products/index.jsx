@@ -2,9 +2,11 @@ import AddIcon from "@mui/icons-material/Add";
 import CancelIcon from "@mui/icons-material/Close";
 import DeleteIcon from "@mui/icons-material/DeleteOutlined";
 import EditIcon from "@mui/icons-material/Edit";
+import QrCode2Icon from "@mui/icons-material/QrCode2";
 import SaveIcon from "@mui/icons-material/Save";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
 import {
   DataGrid,
   GridActionsCellItem,
@@ -15,12 +17,13 @@ import {
 import { randomId } from "@mui/x-data-grid-generator";
 import * as React from "react";
 import { useEffect } from "react";
-import { tokenRefresh } from "../../services/TokenRefresh";
-import { deleteProduct } from "../../services/deleteProduct";
-import { getProducts } from "../../services/getProducts";
-import { getSectors } from "../../services/getSectors";
-import { postProduct } from "../../services/postProduct";
-import { updateProduct } from "../../services/updateProduct";
+import { useNavigate } from "react-router-dom";
+import { tokenRefresh } from "../../services/Auth/TokenRefresh";
+import { deleteProduct } from "../../services/Products/deleteProduct";
+import { getProducts } from "../../services/Products/getProducts";
+import { postProduct } from "../../services/Products/postProduct";
+import { updateProduct } from "../../services/Products/updateProduct";
+import { getSectors } from "../../services/Sectors/getSectors";
 
 function EditToolbar(props) {
   const { setRows, setRowModesModel } = props;
@@ -59,16 +62,23 @@ export default function Products() {
   const [rows, setRows] = React.useState([]);
   const [sectors, setSectors] = React.useState([]);
   const [rowModesModel, setRowModesModel] = React.useState({});
+  const navigate = useNavigate();
 
   useEffect(() => {
+    const token = localStorage.getItem("accessToken");
+
+    if (token === "undefined") navigate("/login");
+
     const fetchData = async () => {
+      const domain = import.meta.env.VITE_BASE_URL;
+      const port = import.meta.env.VITE_BASE_PORT;
       const products = await getProducts();
       const sectors = await getSectors();
 
       const updatedProducts = products.map((product) => {
         return {
           ...product,
-          qr: `http://localhost:5173/products/${product.id}/qr`,
+          qr: `${domain}:${port}/products/${product.id}/qr`,
         };
       });
 
@@ -128,6 +138,12 @@ export default function Products() {
 
   const columns = [
     {
+      field: "id",
+      headerName: "ID",
+      width: 180,
+      editable: true,
+    },
+    {
       field: "name",
       headerName: "Name",
       width: 180,
@@ -162,7 +178,15 @@ export default function Products() {
       field: "qr",
       headerName: "QR",
       width: 100,
-      renderCell: (param) => <a href={param.value}>OPEN</a>,
+      align: "center",
+      headerAlign: "center",
+      renderCell: (param) => (
+        <a href={param.value}>
+          <IconButton>
+            <QrCode2Icon />
+          </IconButton>
+        </a>
+      ),
     },
     {
       field: "actions",
