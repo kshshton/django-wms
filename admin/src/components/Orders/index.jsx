@@ -16,6 +16,7 @@ import { useNavigate } from "react-router-dom";
 import AddressPopup from "../../AddressPopup";
 import CartPopup from "../../CartPopup";
 import CustomerPopup from "../../CustomerPopup";
+import { tokenRefresh } from "../../services/Auth/TokenRefresh";
 import { deleteOrder } from "../../services/Orders/deleteOrder";
 import { getOrders } from "../../services/Orders/getOrders";
 import { updateOrder } from "../../services/Orders/updateOrder";
@@ -51,9 +52,12 @@ export default function Orders() {
   useEffect(() => {
     const token = localStorage.getItem("accessToken");
 
-    if (token === "undefined") navigate("/login");
-
-    fetchData();
+    if (token === "undefined" || token === null) {
+      navigate("/login");
+    } else {
+      tokenRefresh();
+      fetchData();
+    }
   }, []);
 
   const getUserIdByEmail = (email) => {

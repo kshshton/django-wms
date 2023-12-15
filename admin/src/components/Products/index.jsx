@@ -65,20 +65,15 @@ export default function Products() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const token = localStorage.getItem("accessToken");
-
-    if (token === "undefined") navigate("/login");
-
     const fetchData = async () => {
       const domain = import.meta.env.VITE_BASE_URL;
-      const port = import.meta.env.VITE_BASE_PORT;
       const products = await getProducts();
       const sectors = await getSectors();
 
       const updatedProducts = products.map((product) => {
         return {
           ...product,
-          qr: `${domain}:${port}/products/${product.id}/qr`,
+          qr: `${domain}/products/${product.id}/qr`,
         };
       });
 
@@ -86,8 +81,14 @@ export default function Products() {
       setSectors(sectors);
     };
 
-    fetchData();
-    tokenRefresh();
+    const token = localStorage.getItem("accessToken");
+
+    if (token === "undefined" || token === null) {
+      navigate("/login");
+    } else {
+      tokenRefresh();
+      fetchData();
+    }
   }, []);
 
   const handleRowEditStop = (params, event) => {
@@ -172,7 +173,7 @@ export default function Products() {
       width: 100,
       editable: true,
       type: "singleSelect",
-      valueOptions: () => sectors?.map((sector) => sector.name),
+      valueOptions: () => sectors.map((sector) => sector?.name),
     },
     {
       field: "qr",

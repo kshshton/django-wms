@@ -8,6 +8,7 @@ import Login from "./components/Login";
 import Orders from "./components/Orders";
 import Products from "./components/Products";
 import QR from "./components/QR";
+import Register from "./components/Register";
 import Sectors from "./components/Sectors";
 import User from "./components/User";
 
@@ -27,6 +28,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
           <Route path="/logout" element={<Logout />} />
           <Route path="/products" element={<Products />} />
           <Route path="/sectors" element={<Sectors />} />

@@ -51,18 +51,20 @@ const Sectors = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const token = localStorage.getItem("accessToken");
-
-    if (token === "undefined") navigate("/login");
-
     const fetchData = async () => {
       const sectors = await getSectors();
 
       setRows(sectors);
     };
 
-    fetchData();
-    tokenRefresh();
+    const token = localStorage.getItem("accessToken");
+
+    if (token === "undefined" || token === null) {
+      navigate("/login");
+    } else {
+      tokenRefresh();
+      fetchData();
+    }
   }, []);
 
   const handleRowEditStop = (params, event) => {
