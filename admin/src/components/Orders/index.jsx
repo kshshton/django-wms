@@ -218,6 +218,7 @@ export default function Orders() {
       }}
     >
       <DataGrid
+        sx={{ mt: 12, alignItems: "center" }}
         rows={rows}
         columns={columns}
         editMode="row"

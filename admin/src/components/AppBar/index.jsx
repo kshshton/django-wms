@@ -1,5 +1,6 @@
 import AdbIcon from "@mui/icons-material/Adb";
 import MenuIcon from "@mui/icons-material/Menu";
+import WarehouseIcon from "@mui/icons-material/Warehouse";
 import AppBar from "@mui/material/AppBar";
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
@@ -15,7 +16,7 @@ import * as React from "react";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-const pages = ["Products", "Sectors", "Orders", "Login"];
+const pages = ["Products", "Sectors", "Orders", "Login", "Logout"];
 const settings = ["Profile", "Logout"];
 
 function ResponsiveAppBar() {
@@ -47,7 +48,7 @@ function ResponsiveAppBar() {
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
+          <WarehouseIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
           <Typography
             variant="h6"
             noWrap

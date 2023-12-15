@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import "./App.css";
+import Logout from "./Logout";
 import Home from "./components//Home";
 import AppBar from "./components/AppBar";
 import Login from "./components/Login";
@@ -26,6 +27,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/logout" element={<Logout />} />
           <Route path="/products" element={<Products />} />
           <Route path="/sectors" element={<Sectors />} />
           <Route path="/orders" element={<Orders />} />

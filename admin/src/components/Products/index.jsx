@@ -140,7 +140,7 @@ export default function Products() {
     {
       field: "id",
       headerName: "ID",
-      width: 180,
+      width: 80,
       editable: true,
     },
     {
@@ -250,6 +250,7 @@ export default function Products() {
       }}
     >
       <DataGrid
+        sx={{ mt: 12, alignItems: "center" }}
         rows={rows}
         columns={columns}
         editMode="row"
