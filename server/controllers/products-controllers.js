@@ -1,8 +1,6 @@
 import { PrismaClient } from "@prisma/client";
-import express from "express";
 
 const prisma = new PrismaClient();
-const router = express.Router();
 
 export const getProducts = async (req, res) => {
   try {
@@ -110,5 +108,3 @@ export const sendOrder = async (req, res) => {
     });
   }
 };
-
-export default router;
