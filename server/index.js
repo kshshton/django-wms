@@ -35,3 +35,5 @@ app.use("/api/address", addressRouter);
 app.listen(PORT, () =>
   console.log(`Server is running on: http://${URL}:${PORT}`)
 );
+
+export default app;

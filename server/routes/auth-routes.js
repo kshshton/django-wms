@@ -2,7 +2,7 @@ import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcrypt";
 import express from "express";
 import jwt from "jsonwebtoken";
-import { jwtTokens } from "../utils/jwt-utils.js";
+import { jwtTokens } from "../utils/jwtTokens.js";
 
 const prisma = new PrismaClient();
 const router = express.Router();
