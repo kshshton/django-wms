@@ -13,10 +13,13 @@ import userRouter from "./routes/user-routes.js";
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 5000;
-const URL = process.env.URL || "127.0.0.1";
+const URL = process.env.SERVER_URL;
+const PORT = process.env.SERVER_PORT;
+const DOMAIN = `http://${URL}:${PORT}`;
+const WEB_ADDRESS = process.env.ADMIN_ADDRESS;
+const MOBILE_ADDRESS = process.env.MOBILE_EMULATOR_ADDRESS;
 const corsOptions = {
-  origin: ["http://localhost:5173", "10.0.2.2:8001"],
+  origin: [WEB_ADDRESS, MOBILE_ADDRESS],
   methods: ["GET", "POST", "PUT", "DELETE"],
 };
 
@@ -32,8 +35,6 @@ app.use("/api/orders", ordersRouter);
 app.use("/api/customer", customerRouter);
 app.use("/api/address", addressRouter);
 
-app.listen(PORT, () =>
-  console.log(`Server is running on: http://${URL}:${PORT}`)
-);
+app.listen(PORT, () => console.log(`Server is running on: ${DOMAIN}`));
 
 export default app;

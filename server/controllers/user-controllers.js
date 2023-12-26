@@ -62,30 +62,6 @@ export const deleteUser = async (req, res) => {
   }
 };
 
-export const updateUser = async (req, res) => {
-  try {
-    const id = req.params.id;
-    const { firstName, lastName, password, email } = req.body;
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const result = await prisma.user.update({
-      where: {
-        id,
-      },
-      data: {
-        firstName,
-        lastName,
-        hashedPassword,
-        email,
-      },
-    });
-    res.json(result);
-  } catch (_err) {
-    res.status(500).json({
-      error: _err.message,
-    });
-  }
-};
-
 export const createUser = async (req, res) => {
   try {
     const { firstName, lastName, password, email } = req.body;

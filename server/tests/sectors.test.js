@@ -36,55 +36,65 @@ afterAll(async () => {
   await prisma.$disconnect();
 });
 
-describe("GET /api/products", () => {
-  it("should return all products", async () => {
-    const res = await request(app).get("/api/products").expect(200);
+describe("GET /api/sectors", () => {
+  it("should return all sectors", async () => {
+    const res = await request(app)
+      .get("/api/sectors")
+      .set("Authorization", `Bearer ${ACCESS_TOKEN}`)
+      .expect(200);
 
     expect(res.body).toEqual(expect.arrayContaining([]));
   });
 });
 
-describe("POST /api/products", () => {
-  it("should create a product", async () => {
-    await request(app)
-      .post("/api/products")
-      .send({ id: "1" })
-      .set("Authorization", `Bearer ${ACCESS_TOKEN}`)
-      .set("Accept", "application/json")
-      .expect("Content-Type", /json/)
-      .expect(200);
-  });
-});
-
-describe("PUT /api/products", () => {
-  it("should update a product", async () => {
+describe("POST /api/sectors", () => {
+  it("should create a sector", async () => {
     const payload = {
-      name: "Adidas",
-      category: "Buty",
-      quantity: 5,
-      sectorName: "north",
+      id: "99",
+      name: "north-east",
     };
 
     await request(app)
-      .put("/api/products/1")
+      .post("/api/sectors")
       .send(payload)
-      .set("Accept", "application/json")
+      .set("Authorization", `Bearer ${ACCESS_TOKEN}`)
+      .set("Content-Type", "application/json")
       .expect("Content-Type", /json/)
       .expect(200);
   });
 });
 
-describe("GET /api/products/:id", () => {
-  it("should return a product", async () => {
-    const res = await request(app).get("/api/products/1").expect(200);
+describe("PUT /api/sectors/:id", () => {
+  it("should update a sector", async () => {
+    const payload = {
+      id: "99",
+      name: "north-west",
+    };
 
-    expect(Array.isArray(res.body)).toBe(true);
-    expect(res.body.length).toBe(1);
+    await request(app)
+      .put("/api/sectors/99")
+      .send(payload)
+      .set("Authorization", `Bearer ${ACCESS_TOKEN}`)
+      .set("Content-Type", "application/json")
+      .expect("Content-Type", /json/)
+      .expect(200);
   });
 });
 
-describe("DELETE /api/products/:id", () => {
-  it("should delete product", async () => {
-    await request(app).delete("/api/products/1").expect(200);
+describe("GET /api/sectors/:id", () => {
+  it("should return a sector", async () => {
+    await request(app)
+      .get("/api/sectors/99")
+      .set("Authorization", `Bearer ${ACCESS_TOKEN}`)
+      .expect(200);
+  });
+});
+
+describe("DELETE /api/sectors/:id", () => {
+  it("should delete a sector", async () => {
+    await request(app)
+      .delete("/api/sectors/99")
+      .set("Authorization", `Bearer ${ACCESS_TOKEN}`)
+      .expect(200);
   });
 });

@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 
-function authToken(req, res, next) {
+export const authToken = (req, res, next) => {
   const authHeader = req.headers["authorization"];
   const token = authHeader && authHeader.split(" ")[1];
   if (token === null) return res.status(401).json({ error: "null token" });
@@ -9,6 +9,4 @@ function authToken(req, res, next) {
     req.user = user;
     next();
   });
-}
-
-export { authToken };
+};
