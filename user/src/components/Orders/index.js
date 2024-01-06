@@ -1,6 +1,6 @@
-import React, {useEffect, useState} from 'react';
-import {Text, TouchableOpacity, View} from 'react-native';
-import {get_orders} from '../../services/get_orders';
+import React, { useEffect, useState } from 'react';
+import { Text, TouchableOpacity, View } from 'react-native';
+import { get_orders } from '../../services/get_orders';
 import styles from './styles';
 
 const Orders = ({navigation}) => {
@@ -26,7 +26,7 @@ const Orders = ({navigation}) => {
           key={order.id}
           onPress={() => navigateToOrder(order.id)}
           style={styles.orderBtn}>
-          <Text style={styles.loginText}>{order.id}</Text>
+          <Text style={styles.loginText}>{/([^\-]+)/.exec(order.id)[1]}</Text>
         </TouchableOpacity>
       ))}
     </View>
