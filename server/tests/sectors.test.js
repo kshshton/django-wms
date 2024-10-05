@@ -20,7 +20,7 @@ beforeAll(async () => {
   const payload = {
     firstName: "John",
     lastName: "McClane",
-    password: "ididntdiedhard",
+    password: "diehard1",
     email: "john192546@gmail.com",
   };
   const res = await request(app).post("/api/user").send(payload);

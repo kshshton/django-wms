@@ -22,7 +22,7 @@ beforeAll(async () => {
   const payload = {
     firstName: "John",
     lastName: "McClane",
-    password: "ididntdiedhard",
+    password: "diehard1",
     email: "john192546@gmail.com",
   };
   const res = await request(app).post("/api/user").send(payload);
@@ -43,7 +43,7 @@ describe("POST /api/auth/login", () => {
     const res = await request(app)
       .post("/api/auth/login")
       .set("Content-Type", "application/json")
-      .send({ email: "john192546@gmail.com", password: "ididntdiedhard" })
+      .send({ email: "john192546@gmail.com", password: "diehard1" })
       .expect(200);
 
     REFRESH_TOKEN = res._body.tokens.refreshToken;

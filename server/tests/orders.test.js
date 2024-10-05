@@ -21,7 +21,7 @@ beforeAll(async () => {
   const userData = {
     firstName: "John",
     lastName: "McClane",
-    password: "ididntdiedhard",
+    password: "diehard1",
     email: "john192546@gmail.com",
   };
   const userResponse = await request(app).post("/api/user").send(userData);

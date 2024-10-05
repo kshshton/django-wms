@@ -27,7 +27,7 @@ describe("POST /api/user", () => {
     const payload = {
       firstName: "John",
       lastName: "McClane",
-      password: "ididntdiedhard",
+      password: "diehard1",
       email: "john192546@gmail.com",
     };
 
